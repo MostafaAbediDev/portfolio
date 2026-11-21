@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-12 bg-emerald-500/10 blur-2xl pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
         {/* Clean Back To Top Pill */}
         <button
           onClick={scrollToTop}
@@ -29,17 +29,20 @@ export const Footer: React.FC = () => {
           <ArrowUp className="w-4 h-4 text-emerald-500 transition-transform group-hover:-translate-y-0.5" />
         </button>
 
-        {/* Designed & Developed Notice */}
-        <p className="text-xs sm:text-sm font-medium text-slate-400 dark:text-slate-400 mb-3">
-          {lang === 'fa' ? 'طراحی و توسعه توسط مصطفی عابدی' : 'Designed & Developed by Mostafa Abedi'}
-        </p>
+        {/* Realigned Bottom Row */}
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-slate-200/60 dark:border-slate-800/60 text-xs sm:text-sm">
+          {/* Designed & Developed Notice - Right in RTL (start) */}
+          <p className="font-medium text-slate-400 dark:text-slate-400 text-center sm:text-start">
+            {lang === 'fa' ? 'طراحی و توسعه توسط مصطفی عابدی' : 'Designed & Developed by Mostafa Abedi'}
+          </p>
 
-        {/* Bottom Copyright Notice */}
-        <p className="text-xs text-slate-500 dark:text-slate-500 font-medium">
-          {lang === 'fa'
-            ? '© 2026 مصطفی عابدی. تمامی حقوق محفوظ است.'
-            : '© 2026 Mostafa Abedi. All rights reserved.'}
-        </p>
+          {/* Bottom Copyright Notice - Left in RTL (end) */}
+          <p className="text-slate-500 dark:text-slate-500 font-medium text-center sm:text-end">
+            {lang === 'fa'
+              ? '© 2026 مصطفی عابدی. تمامی حقوق محفوظ است.'
+              : '© 2026 Mostafa Abedi. All rights reserved.'}
+          </p>
+        </div>
       </div>
     </footer>
   );

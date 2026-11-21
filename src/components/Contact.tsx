@@ -43,6 +43,8 @@ export const Contact: React.FC = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isPendingActivation, setIsPendingActivation] = useState(false);
   const [copiedMessage, setCopiedMessage] = useState(false);
   const [submittedAt, setSubmittedAt] = useState<string>('');
 
@@ -138,9 +140,12 @@ export const Contact: React.FC = () => {
     e.preventDefault();
     if (!validate()) return;
 
+    setSubmitError(null);
     setIsSubmitting(true);
     const now = new Date().toLocaleString(lang === 'fa' ? 'fa-IR' : 'en-US');
     setSubmittedAt(now);
+
+    let delivered = false;
 
     try {
       // 1. In-app background dispatch via local Next.js API route
@@ -160,14 +165,18 @@ export const Contact: React.FC = () => {
       });
 
       const result = await response.json().catch(() => ({}));
-      if (!response.ok || result.success === false) {
+      if (response.ok && result.success !== false) {
+        delivered = true;
+        setIsPendingActivation(Boolean(result.pendingActivation));
+      } else {
         throw new Error(result.error || 'Local API route responded with status ' + response.status);
       }
     } catch (err) {
       console.warn('API route failed, trying direct AJAX dispatch to FormSubmit:', err);
       try {
         const isEmail = formData.contact.includes('@');
-        await fetch('https://formsubmit.co/ajax/mostafa.abedi554@gmail.com', {
+        const senderEmail = isEmail ? formData.contact.trim() : 'no-reply@mostafaabedi.ir';
+        const fallbackRes = await fetch('https://formsubmit.co/ajax/mostafa.abedi554@gmail.com', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -176,8 +185,8 @@ export const Contact: React.FC = () => {
           body: JSON.stringify({
             name: formData.name.trim(),
             contact: formData.contact.trim(),
-            email: isEmail ? formData.contact.trim() : undefined,
-            _replyto: isEmail ? formData.contact.trim() : undefined,
+            email: senderEmail,
+            _replyto: senderEmail,
             subject: formData.subject.trim(),
             message: formData.message.trim(),
             _subject: `[Portfolio Message] ${formData.subject.trim()} - ${formData.name.trim()}`,
@@ -185,12 +194,28 @@ export const Contact: React.FC = () => {
             _captcha: 'false',
           }),
         });
+        const fallbackJson = await fallbackRes.json().catch(() => ({}));
+        if (fallbackRes.ok) {
+          delivered = true;
+          const needsActivation =
+            typeof fallbackJson?.message === 'string' &&
+            fallbackJson.message.toLowerCase().includes('activation');
+          setIsPendingActivation(needsActivation);
+        }
       } catch (directErr) {
         console.warn('Direct FormSubmit dispatch warning:', directErr);
       }
     } finally {
       setIsSubmitting(false);
-      setSubmitSuccess(true);
+      if (delivered) {
+        setSubmitSuccess(true);
+      } else {
+        setSubmitError(
+          lang === 'fa'
+            ? 'متأسفانه در برقراری ارتباط با سرور ارسال پیام خطایی رخ داد. لطفاً مجدداً امتحان کنید یا از راه‌های ارتباط مستقیم بالای فرم پیام دهید.'
+            : 'Failed to deliver message. Please try again or reach out directly using the direct channels above.'
+        );
+      }
     }
   };
 
@@ -219,6 +244,8 @@ export const Contact: React.FC = () => {
   const handleResetForm = () => {
     setFormData({ name: '', contact: '', subject: '', message: '' });
     setFormErrors({});
+    setSubmitError(null);
+    setIsPendingActivation(false);
     setSubmittedAt('');
     setSubmitSuccess(false);
   };
@@ -443,6 +470,25 @@ export const Contact: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Pending One-Time Activation Notification */}
+                {isPendingActivation && (
+                  <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs sm:text-sm space-y-1.5 leading-relaxed">
+                    <div className="font-bold flex items-center gap-2 text-amber-700 dark:text-amber-300">
+                      <Sparkles className="w-4 h-4 shrink-0 text-amber-500" />
+                      <span>
+                        {lang === 'fa'
+                          ? 'نیاز به تأیید اولیه لینک فعال‌سازی (One-Time Activation)'
+                          : 'One-Time FormSubmit Activation Required'}
+                      </span>
+                    </div>
+                    <p>
+                      {lang === 'fa'
+                        ? 'یک ایمیل حاوی لینک فعال‌سازی یک‌باره از سوی FormSubmit به mostafa.abedi554@gmail.com ارسال شده است. لطفاً صندوق ورودی (Inbox) یا پوشه هرزنامه (Spam) ایمیل خود را بررسی و روی دکمه Activate Form کلیک کنید تا تمام پیام‌ها بلافاصله به اینباکس تحویل شوند (پیام‌های ارسالی تا ۳۰ روز محفوظ می‌مانند).'
+                        : 'A one-time activation link has been sent to mostafa.abedi554@gmail.com. Please check your Inbox or Spam folder and click "Activate Form" to start receiving all submissions.'}
+                    </p>
+                  </div>
+                )}
+
                 {/* Submitted Message Summary Box */}
                 <div className="p-4 sm:p-5 rounded-2xl bg-slate-100/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-2.5 text-xs sm:text-sm">
                   <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800 font-mono text-[11px] text-slate-500">
@@ -633,6 +679,13 @@ export const Contact: React.FC = () => {
                   )}
                 </div>
 
+                {/* Submit Error Banner */}
+                {submitError && (
+                  <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-medium animate-in fade-in">
+                    {submitError}
+                  </div>
+                )}
+
                 {/* Submit Action */}
                 <div className="pt-2">
                   <button
@@ -653,13 +706,6 @@ export const Contact: React.FC = () => {
                     )}
                   </button>
                 </div>
-
-                {/* Micro Hint */}
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-1 text-center leading-relaxed">
-                  {lang === 'fa'
-                    ? 'پیام شما به صورت مستقیم و در پس‌زمینه به mostafa.abedi554@gmail.com ارسال می‌شود و برنامه‌ای در دستگاه شما باز نخواهد شد.'
-                    : 'Your message is submitted directly in the background to mostafa.abedi554@gmail.com without opening external apps.'}
-                </p>
               </form>
             )}
           </AnimatePresence>

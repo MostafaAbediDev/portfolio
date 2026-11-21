@@ -20,9 +20,11 @@ export async function POST(request: Request) {
     // Extract Origin and Referer from incoming request to comply with FormSubmit anti-bot checks
     const reqOrigin = request.headers.get('origin');
     const reqReferer = request.headers.get('referer');
-    const siteUrl = reqOrigin || reqReferer || 'https://mostafaabedi.ir';
+    const siteUrl = reqOrigin && !reqOrigin.includes('localhost') ? reqOrigin : 'https://mostafaabedi.ir';
+    const siteReferer = reqReferer && !reqReferer.includes('localhost') ? reqReferer : `${siteUrl}/`;
 
     const isEmail = contact.trim().includes('@');
+    const senderEmail = isEmail ? contact.trim() : 'no-reply@mostafaabedi.ir';
 
     // Direct background dispatch to FormSubmit for mostafa.abedi554@gmail.com
     const response = await fetch('https://formsubmit.co/ajax/mostafa.abedi554@gmail.com', {
@@ -31,13 +33,15 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json',
         Accept: 'application/json',
         Origin: siteUrl,
-        Referer: reqReferer || `${siteUrl}/`,
+        Referer: siteReferer,
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       },
       body: JSON.stringify({
         name: name.trim(),
         contact: contact.trim(),
-        email: isEmail ? contact.trim() : undefined,
-        _replyto: isEmail ? contact.trim() : undefined,
+        email: senderEmail,
+        _replyto: senderEmail,
         subject: subject?.trim() || 'پیام جدید از وب‌سایت پورتفولیو',
         message: message.trim(),
         _subject: `[Portfolio Message] ${subject?.trim() || 'Inquiry'} - ${name.trim()}`,
@@ -58,9 +62,14 @@ export async function POST(request: Request) {
       );
     }
 
+    const isActivationRequired =
+      typeof json?.message === 'string' &&
+      json.message.toLowerCase().includes('activation');
+
     return NextResponse.json({
       success: true,
-      pendingActivation: json?.message?.toLowerCase().includes('activation') ?? false,
+      pendingActivation: isActivationRequired,
+      message: json?.message || 'Sent successfully',
       data: json,
     });
   } catch (error) {
