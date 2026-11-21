@@ -42,8 +42,8 @@ export const Hero: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.15 }}
             className={`lg:col-span-5 flex justify-center ${
-              dir === 'rtl' ? 'lg:justify-start lg:order-1' : 'lg:justify-end lg:order-2'
-            } order-first lg:order-none`}
+              dir === 'rtl' ? 'lg:order-1' : 'lg:order-2'
+            } order-first`}
           >
             {/* Standalone Portrait with Multi-tier Luminous Glow Frame */}
             <div className="relative group">
@@ -148,7 +148,7 @@ export const Hero: React.FC = () => {
                 className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 shadow-glow transition-all hover:scale-105 active:scale-95"
               >
                 <span>{t.viewProjects[lang]}</span>
-                <ArrowRight className={`w-4 h-4 ${dir === 'rtl' ? 'rtl:-scale-x-100' : ''}`} />
+                <ArrowRight className={`w-4 h-4 ${dir === 'rtl' ? 'rotate-180' : ''}`} />
               </a>
 
               <a

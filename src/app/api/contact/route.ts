@@ -26,6 +26,12 @@ export async function POST(request: Request) {
     const isEmail = contact.trim().includes('@');
     const senderEmail = isEmail ? contact.trim() : 'no-reply@mostafaabedi.ir';
 
+    const fullMessage =
+      `فرستنده: ${name.trim()}\n` +
+      `اطلاعات تماس: ${contact.trim()}\n` +
+      `موضوع: ${subject?.trim() || 'بدون موضوع'}\n\n` +
+      `متن پیام:\n${message.trim()}`;
+
     // Direct background dispatch to FormSubmit for mostafa.abedi554@gmail.com
     const response = await fetch('https://formsubmit.co/ajax/mostafa.abedi554@gmail.com', {
       method: 'POST',
@@ -43,7 +49,7 @@ export async function POST(request: Request) {
         email: senderEmail,
         _replyto: senderEmail,
         subject: subject?.trim() || 'پیام جدید از وب‌سایت پورتفولیو',
-        message: message.trim(),
+        message: fullMessage,
         _subject: `[Portfolio Message] ${subject?.trim() || 'Inquiry'} - ${name.trim()}`,
         _template: 'table',
         _captcha: 'false',

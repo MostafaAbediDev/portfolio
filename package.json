@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:data": "node --experimental-strip-types src/tests/verify-data.ts && node --experimental-strip-types src/tests/verify-contact-and-nav.ts"
+    "test:data": "node --experimental-strip-types src/tests/verify-data.ts && node --experimental-strip-types src/tests/verify-contact-and-nav.ts && node --experimental-strip-types src/tests/verify-review-fixes.ts"
   },
   "dependencies": {
     "next": "^14.2.18",

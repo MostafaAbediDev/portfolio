@@ -470,21 +470,21 @@ export const Contact: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Pending One-Time Activation Notification */}
+                {/* Administrative One-Time Activation Status Notice */}
                 {isPendingActivation && (
                   <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs sm:text-sm space-y-1.5 leading-relaxed">
                     <div className="font-bold flex items-center gap-2 text-amber-700 dark:text-amber-300">
                       <Sparkles className="w-4 h-4 shrink-0 text-amber-500" />
                       <span>
                         {lang === 'fa'
-                          ? 'نیاز به تأیید اولیه لینک فعال‌سازی (One-Time Activation)'
-                          : 'One-Time FormSubmit Activation Required'}
+                          ? 'اطلاعیه راه‌اندازی (مخصوص مدیر پورتفولیو):'
+                          : 'Setup Notice (For Portfolio Owner):'}
                       </span>
                     </div>
                     <p>
                       {lang === 'fa'
-                        ? 'یک ایمیل حاوی لینک فعال‌سازی یک‌باره از سوی FormSubmit به mostafa.abedi554@gmail.com ارسال شده است. لطفاً صندوق ورودی (Inbox) یا پوشه هرزنامه (Spam) ایمیل خود را بررسی و روی دکمه Activate Form کلیک کنید تا تمام پیام‌ها بلافاصله به اینباکس تحویل شوند (پیام‌های ارسالی تا ۳۰ روز محفوظ می‌مانند).'
-                        : 'A one-time activation link has been sent to mostafa.abedi554@gmail.com. Please check your Inbox or Spam folder and click "Activate Form" to start receiving all submissions.'}
+                        ? 'پیام در نوبت تحویل ثبت شد. در صورتی که این نخستین آزمایش فرم است، لطفاً ایمیل فعال‌سازی اولیه FormSubmit را در mostafa.abedi554@gmail.com (یا پوشه Spam) تایید نمایید تا تمامی پیام‌های دریافتی مستقیماً به اینباکس جیمیل شما هدایت شوند.'
+                        : 'Your submission is queued. If this is the initial setup test, please confirm the one-time FormSubmit activation link in mostafa.abedi554@gmail.com (or Spam folder) to enable direct inbox forwarding.'}
                     </p>
                   </div>
                 )}
@@ -511,6 +511,45 @@ export const Contact: React.FC = () => {
                   )}
                   <div className="pt-2 border-t border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">
                     {formData.message}
+                  </div>
+                </div>
+
+                {/* One-click Instant Channels Direct Dispatch */}
+                <div className="pt-1">
+                  <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                    {lang === 'fa' ? 'ارسال مستقیم نسخه پیام در پیام‌رسان‌ها یا ایمیل:' : 'Send a copy directly via instant messaging or Gmail:'}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <a
+                      href={`https://mail.google.com/mail/?view=cm&fs=1&to=mostafa.abedi554@gmail.com&su=${encodeURIComponent(formData.subject.trim())}&body=${encodeURIComponent(getFormattedMessage())}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 hover:bg-rose-500/20 transition-all shadow-sm"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>{lang === 'fa' ? 'جیمیل وب' : 'Gmail Web'}</span>
+                      <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+                    </a>
+                    <a
+                      href={`https://t.me/mstf_abedi?text=${encodeURIComponent(getFormattedMessage())}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 hover:bg-sky-500/20 transition-all shadow-sm"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                      <span>{lang === 'fa' ? 'تلگرام' : 'Telegram'}</span>
+                      <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+                    </a>
+                    <a
+                      href={`https://wa.me/989177249281?text=${encodeURIComponent(getFormattedMessage())}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all shadow-sm"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5" />
+                      <span>{lang === 'fa' ? 'واتس‌اپ' : 'WhatsApp'}</span>
+                      <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+                    </a>
                   </div>
                 </div>
 
