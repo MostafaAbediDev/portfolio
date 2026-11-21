@@ -1,0 +1,670 @@
+'use client';
+
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { usePortfolio } from '../context/PortfolioContext';
+import {
+  ExternalLink,
+  Copy,
+  Check,
+  MessageCircle,
+  Send,
+  Instagram,
+  Mail,
+  Phone,
+  Linkedin,
+  User,
+  AtSign,
+  FileText,
+  MessageSquare,
+  Sparkles,
+  Loader2,
+  RotateCcw,
+} from 'lucide-react';
+
+export const Contact: React.FC = () => {
+  const { lang, t } = usePortfolio();
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  // Form State
+  const [formData, setFormData] = useState({
+    name: '',
+    contact: '',
+    subject: '',
+    message: '',
+  });
+
+  const [formErrors, setFormErrors] = useState<{
+    name?: string;
+    contact?: string;
+    subject?: string;
+    message?: string;
+  }>({});
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [copiedMessage, setCopiedMessage] = useState(false);
+  const [submittedAt, setSubmittedAt] = useState<string>('');
+
+  const handleCopy = async (text: string, id: string) => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-999999px';
+        textarea.style.top = '-999999px';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+      }
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2500);
+    } catch (err) {
+      console.warn('Clipboard copy fallback:', err);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2500);
+    }
+  };
+
+  const validate = (): boolean => {
+    const errors: {
+      name?: string;
+      contact?: string;
+      subject?: string;
+      message?: string;
+    } = {};
+
+    if (!formData.name.trim()) {
+      errors.name = lang === 'fa' ? 'لطفاً نام و نام‌خانوادگی خود را وارد کنید' : 'Please enter your name';
+    } else if (formData.name.trim().length < 2) {
+      errors.name = lang === 'fa' ? 'نام باید حداقل ۲ حرف باشد' : 'Name must be at least 2 characters';
+    }
+
+    if (!formData.contact.trim()) {
+      errors.contact = lang === 'fa' ? 'لطفاً ایمیل یا شماره تماس خود را وارد کنید' : 'Please enter your email or phone';
+    } else if (formData.contact.trim().length < 5) {
+      errors.contact = lang === 'fa' ? 'شماره تماس یا ایمیل معتبر وارد کنید' : 'Enter a valid email or phone number';
+    }
+
+    if (!formData.subject.trim()) {
+      errors.subject = lang === 'fa' ? 'لطفاً موضوع پیام را مشخص کنید' : 'Please enter a subject';
+    }
+
+    if (!formData.message.trim()) {
+      errors.message = lang === 'fa' ? 'لطفاً متن پیام خود را بنویسید' : 'Please enter your message';
+    } else if (formData.message.trim().length < 10) {
+      errors.message = lang === 'fa' ? 'متن پیام باید حداقل ۱۰ کاراکتر باشد' : 'Message must be at least 10 characters';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const getFormattedMessage = (customTime?: string) => {
+    const timeString = customTime || submittedAt || new Date().toLocaleString(lang === 'fa' ? 'fa-IR' : 'en-US');
+    if (lang === 'fa') {
+      return (
+        `سلام مصطفی عزیز،\n\n` +
+        `پیام جدیدی از طریق ${t.contactFormTitle[lang]} ارسال شده است:\n\n` +
+        `👤 فرستنده: ${formData.name.trim()}\n` +
+        `📞 اطلاعات تماس (ایمیل/شماره): ${formData.contact.trim()}\n` +
+        `📌 موضوع: ${formData.subject.trim()}\n` +
+        `⏰ زمان ارسال: ${timeString}\n\n` +
+        `💬 شرح پیام:\n${formData.message.trim()}\n\n` +
+        `----------------------------------------\n` +
+        `ارسال مستقیم به mostafa.abedi554@gmail.com از وب‌سایت مصطفی عابدی`
+      );
+    } else {
+      return (
+        `Hi Mostafa,\n\n` +
+        `You have received a new inquiry via ${t.contactFormTitle[lang]}:\n\n` +
+        `👤 Sender: ${formData.name.trim()}\n` +
+        `📞 Contact (Email/Phone): ${formData.contact.trim()}\n` +
+        `📌 Subject: ${formData.subject.trim()}\n` +
+        `⏰ Timestamp: ${timeString}\n\n` +
+        `💬 Message:\n${formData.message.trim()}\n\n` +
+        `----------------------------------------\n` +
+        `Sent directly to mostafa.abedi554@gmail.com from Mostafa Abedi's Portfolio`
+      );
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    setIsSubmitting(true);
+    const now = new Date().toLocaleString(lang === 'fa' ? 'fa-IR' : 'en-US');
+    setSubmittedAt(now);
+
+    try {
+      // 1. In-app background dispatch via local Next.js API route
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          contact: formData.contact.trim(),
+          subject: formData.subject.trim(),
+          message: formData.message.trim(),
+          _honey: '',
+        }),
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.success === false) {
+        throw new Error(result.error || 'Local API route responded with status ' + response.status);
+      }
+    } catch (err) {
+      console.warn('API route failed, trying direct AJAX dispatch to FormSubmit:', err);
+      try {
+        const isEmail = formData.contact.includes('@');
+        await fetch('https://formsubmit.co/ajax/mostafa.abedi554@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            contact: formData.contact.trim(),
+            email: isEmail ? formData.contact.trim() : undefined,
+            _replyto: isEmail ? formData.contact.trim() : undefined,
+            subject: formData.subject.trim(),
+            message: formData.message.trim(),
+            _subject: `[Portfolio Message] ${formData.subject.trim()} - ${formData.name.trim()}`,
+            _template: 'table',
+            _captcha: 'false',
+          }),
+        });
+      } catch (directErr) {
+        console.warn('Direct FormSubmit dispatch warning:', directErr);
+      }
+    } finally {
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
+    }
+  };
+
+  const handleCopyMessageDraft = async () => {
+    const text = getFormattedMessage();
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-999999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+      }
+      setCopiedMessage(true);
+      setTimeout(() => setCopiedMessage(false), 2500);
+    } catch (err) {
+      console.warn('Copy failed:', err);
+    }
+  };
+
+  const handleResetForm = () => {
+    setFormData({ name: '', contact: '', subject: '', message: '' });
+    setFormErrors({});
+    setSubmittedAt('');
+    setSubmitSuccess(false);
+  };
+
+  const contactChannels = [
+    {
+      id: 'whatsapp',
+      name: { fa: 'واتس‌اپ', en: 'WhatsApp' },
+      identifier: 'mstf_abedi',
+      copyValue: 'mstf_abedi',
+      link: 'https://wa.me/989177249281',
+      copyLabel: { fa: 'کپی آیدی واتس‌اپ', en: 'Copy WhatsApp ID' },
+      icon: MessageCircle,
+      colorClass: 'text-emerald-500 dark:text-emerald-400',
+      badgeClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
+      hoverClass: 'hover:border-emerald-500/40 hover:bg-emerald-500/5',
+    },
+    {
+      id: 'telegram',
+      name: { fa: 'تلگرام', en: 'Telegram' },
+      identifier: '@mstf_abedi',
+      copyValue: 'mstf_abedi',
+      link: 'https://t.me/mstf_abedi',
+      copyLabel: { fa: 'کپی آیدی تلگرام', en: 'Copy Telegram ID' },
+      icon: Send,
+      colorClass: 'text-sky-500 dark:text-sky-400',
+      badgeClass: 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20',
+      hoverClass: 'hover:border-sky-500/40 hover:bg-sky-500/5',
+    },
+    {
+      id: 'linkedin',
+      name: { fa: 'لینکدین', en: 'LinkedIn' },
+      identifier: 'mostafaaaa-abediiii',
+      copyValue: 'mostafaaaa-abediiii',
+      link: 'https://linkedin.com/in/mostafaaaa-abediiii',
+      copyLabel: { fa: 'کپی آیدی لینکدین', en: 'Copy LinkedIn' },
+      icon: Linkedin,
+      colorClass: 'text-blue-500 dark:text-blue-400',
+      badgeClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
+      hoverClass: 'hover:border-blue-500/40 hover:bg-blue-500/5',
+    },
+    {
+      id: 'instagram',
+      name: { fa: 'اینستاگرام', en: 'Instagram' },
+      identifier: 'mostafa.__.abediii',
+      copyValue: 'mostafa.__.abediii',
+      link: 'https://instagram.com/mostafa.__.abediii',
+      copyLabel: { fa: 'کپی آیدی اینستاگرام', en: 'Copy Instagram' },
+      icon: Instagram,
+      colorClass: 'text-pink-500 dark:text-pink-400',
+      badgeClass: 'bg-pink-500/10 text-pink-600 dark:text-pink-400 border-pink-500/20',
+      hoverClass: 'hover:border-pink-500/40 hover:bg-pink-500/5',
+    },
+    {
+      id: 'gmail',
+      name: { fa: 'جیمیل مستقیم', en: 'Gmail' },
+      identifier: 'mostafa.abedi554@gmail.com',
+      copyValue: 'mostafa.abedi554@gmail.com',
+      link: 'https://mail.google.com/mail/?view=cm&fs=1&to=mostafa.abedi554@gmail.com',
+      copyLabel: { fa: 'کپی ایمیل', en: 'Copy Email' },
+      icon: Mail,
+      colorClass: 'text-rose-500 dark:text-rose-400',
+      badgeClass: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20',
+      hoverClass: 'hover:border-rose-500/40 hover:bg-rose-500/5',
+    },
+    {
+      id: 'phone',
+      name: { fa: 'پیامک و تماس', en: 'SMS & Call' },
+      identifier: '09177249281',
+      copyValue: '09177249281',
+      link: 'sms:+989177249281',
+      copyLabel: { fa: 'کپی شماره همراه', en: 'Copy Phone' },
+      icon: Phone,
+      colorClass: 'text-amber-500 dark:text-amber-400',
+      badgeClass: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
+      hoverClass: 'hover:border-amber-500/40 hover:bg-amber-500/5',
+    },
+  ];
+
+  return (
+    <section id="contact" className="py-20 sm:py-24 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto mb-10 sm:mb-12"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-3.5">
+            <Mail className="w-3.5 h-3.5 text-emerald-500" />
+            <span>{lang === 'fa' ? 'راه‌های ارتباطی' : 'Get In Touch'}</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-heading font-extrabold tracking-tight text-slate-900 dark:text-white">
+            {t.contactFormTitle[lang]}
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+            {lang === 'fa'
+              ? 'پیام خود را از طریق فرم زیر مستقیماً ارسال فرمایید یا از راه‌های ارتباط سریع زیر در تماس باشید.'
+              : 'Send your message directly via the form below or connect via the quick channels below.'}
+          </p>
+        </motion.div>
+
+        {/* Unified Contact Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="glass-card rounded-3xl p-5 sm:p-8 md:p-10 border border-slate-200/80 dark:border-slate-800 shadow-2xl relative overflow-hidden"
+        >
+          {/* Ambient top highlight */}
+          <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500" />
+
+          {/* Card Header & Title */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
+            <div className="flex items-center gap-3">
+              <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/25 shrink-0">
+                <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
+              <div>
+                <h3 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 dark:text-white">
+                  {t.contactFormTitle[lang]}
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  {lang === 'fa'
+                    ? 'ارسال مستقیم و امن به mostafa.abedi554@gmail.com'
+                    : 'Direct and secure delivery to mostafa.abedi554@gmail.com'}
+                </p>
+              </div>
+            </div>
+
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 self-start sm:self-auto">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
+              <span>{lang === 'fa' ? 'ارسال بدون خروج از سایت' : 'Direct In-App Delivery'}</span>
+            </div>
+          </div>
+
+          {/* Integrated Minimalist Direct Channels Dock */}
+          <div className="mb-8 p-3.5 sm:p-4 rounded-2xl bg-slate-100/70 dark:bg-slate-900/60 border border-slate-200/70 dark:border-slate-800/70">
+            <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-2.5 flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
+                <span>{lang === 'fa' ? 'راه‌های ارتباط مستقیم و فوری:' : 'Instant Direct Channels:'}</span>
+              </span>
+              <span className="text-[10px] text-slate-400">
+                {lang === 'fa' ? 'کلیک جهت پیام یا کپی' : 'Click to reach or copy'}
+              </span>
+            </div>
+
+            {/* Modern Minimalist Pills */}
+            <div className="flex flex-wrap items-center gap-2">
+              {contactChannels.map((channel) => {
+                const Icon = channel.icon;
+                const isCopied = copiedId === channel.id;
+
+                return (
+                  <div
+                    key={channel.id}
+                    className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold bg-white/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 ${channel.hoverClass} text-slate-700 dark:text-slate-200 transition-all duration-200 shadow-sm`}
+                  >
+                    <a
+                      href={channel.link}
+                      target={channel.link.startsWith('http') ? '_blank' : undefined}
+                      rel={channel.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="inline-flex items-center gap-1.5 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+                      title={`${channel.name[lang]}: ${channel.identifier}`}
+                    >
+                      <Icon className={`w-3.5 h-3.5 ${channel.colorClass}`} />
+                      <span>{channel.name[lang]}</span>
+                      <ExternalLink className="w-2.5 h-2.5 text-slate-400 opacity-60" />
+                    </a>
+
+                    <span className="text-slate-300 dark:text-slate-700">|</span>
+
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(channel.copyValue, channel.id)}
+                      className="p-0.5 rounded-md text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+                      title={channel.copyLabel[lang]}
+                      aria-label={isCopied ? t.copied[lang] : channel.copyLabel[lang]}
+                    >
+                      {isCopied ? (
+                        <Check className="w-3 h-3 text-emerald-500" />
+                      ) : (
+                        <Copy className="w-3 h-3" />
+                      )}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Interactive Form or Success State */}
+          <AnimatePresence mode="wait">
+            {submitSuccess ? (
+              /* Sleek In-Form Success Card */
+              <motion.div
+                key="success-card"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                className="py-4 space-y-6"
+              >
+                <div className="p-5 sm:p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-900 dark:text-emerald-200 shadow-glow">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-2xl bg-emerald-500 text-white shrink-0 shadow-md">
+                      <Check className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-base sm:text-lg font-heading font-extrabold text-emerald-950 dark:text-emerald-200 leading-snug">
+                        {t.formSuccess[lang]}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-emerald-800/90 dark:text-emerald-300/90 mt-1.5 leading-relaxed">
+                        {lang === 'fa'
+                          ? 'پیام شما مستقیماً به ایمیل مصطفی عابدی ارسال گردید. از تماس شما سپاسگزاریم.'
+                          : 'Your message has been delivered directly to Mostafa Abedi. Thank you for reaching out.'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Submitted Message Summary Box */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-slate-100/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-2.5 text-xs sm:text-sm">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800 font-mono text-[11px] text-slate-500">
+                    <span>{lang === 'fa' ? 'مقصد جیمیل:' : 'Destination:'}</span>
+                    <strong className="text-emerald-500">mostafa.abedi554@gmail.com</strong>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 font-semibold">{lang === 'fa' ? 'فرستنده: ' : 'From: '}</span>
+                    <span className="text-slate-800 dark:text-slate-200 font-medium">{formData.name} ({formData.contact})</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 font-semibold">{lang === 'fa' ? 'موضوع: ' : 'Subject: '}</span>
+                    <span className="text-slate-800 dark:text-slate-200 font-medium">{formData.subject}</span>
+                  </div>
+                  {submittedAt && (
+                    <div className="text-[11px] text-slate-400">
+                      <span>{lang === 'fa' ? 'زمان ارسال: ' : 'Timestamp: '}</span>
+                      <span className="font-mono text-slate-600 dark:text-slate-300">{submittedAt}</span>
+                    </div>
+                  )}
+                  <div className="pt-2 border-t border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">
+                    {formData.message}
+                  </div>
+                </div>
+
+                {/* Action Buttons: Send Another Message & Copy Draft */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={handleResetForm}
+                    className="min-h-[46px] flex-1 inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500 hover:from-emerald-500 hover:to-cyan-400 shadow-glow transition-all active:scale-95"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                    <span>{lang === 'fa' ? 'ارسال پیام دیگر' : 'Send Another Message'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleCopyMessageDraft}
+                    className="min-h-[46px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-all active:scale-95"
+                  >
+                    {copiedMessage ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                    <span>{copiedMessage ? (lang === 'fa' ? 'کپی شد!' : 'Copied!') : (lang === 'fa' ? 'کپی متن پیام' : 'Copy Message')}</span>
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              /* Contact Form */
+              <form key="contact-form" onSubmit={handleSubmit} noValidate className="space-y-4">
+                {/* Row 1: Name and Contact */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Name Field */}
+                  <div>
+                    <label htmlFor="contact-name" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                      <span className="flex items-center gap-1.5">
+                        <User className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>{t.formName[lang]}</span>
+                        <span className="text-rose-500">*</span>
+                      </span>
+                    </label>
+                    <input
+                      id="contact-name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      value={formData.name}
+                      onChange={(e) => {
+                        setFormData({ ...formData, name: e.target.value });
+                        if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
+                      }}
+                      placeholder={lang === 'fa' ? 'مثال: علیرضا محمدی' : 'e.g. John Doe'}
+                      className={`w-full min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-100/90 dark:bg-slate-900/80 border text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all ${
+                        formErrors.name
+                          ? 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/30'
+                          : 'border-slate-200 dark:border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
+                      }`}
+                    />
+                    {formErrors.name && (
+                      <p className="mt-1 text-[11px] text-rose-500 font-medium animate-in fade-in">
+                        {formErrors.name}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Contact (Email / Phone) Field */}
+                  <div>
+                    <label htmlFor="contact-info" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                      <span className="flex items-center gap-1.5">
+                        <AtSign className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>{lang === 'fa' ? 'ایمیل یا شماره تماس' : 'Email or Phone'}</span>
+                        <span className="text-rose-500">*</span>
+                      </span>
+                    </label>
+                    <input
+                      id="contact-info"
+                      name="contact"
+                      type="text"
+                      autoComplete="email"
+                      value={formData.contact}
+                      onChange={(e) => {
+                        setFormData({ ...formData, contact: e.target.value });
+                        if (formErrors.contact) setFormErrors({ ...formErrors, contact: undefined });
+                      }}
+                      placeholder={lang === 'fa' ? 'info@example.com یا 0917xxxxxxx' : 'info@example.com or +98...'}
+                      className={`w-full min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-100/90 dark:bg-slate-900/80 border text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all ${
+                        formErrors.contact
+                          ? 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/30'
+                          : 'border-slate-200 dark:border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
+                      }`}
+                    />
+                    {formErrors.contact && (
+                      <p className="mt-1 text-[11px] text-rose-500 font-medium animate-in fade-in">
+                        {formErrors.contact}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Row 2: Subject Field */}
+                <div>
+                  <label htmlFor="contact-subject" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                    <span className="flex items-center gap-1.5">
+                      <FileText className="w-3.5 h-3.5 text-emerald-500" />
+                      <span>{t.formSubject[lang]}</span>
+                      <span className="text-rose-500">*</span>
+                    </span>
+                  </label>
+                  <input
+                    id="contact-subject"
+                    name="subject"
+                    type="text"
+                    value={formData.subject}
+                    onChange={(e) => {
+                      setFormData({ ...formData, subject: e.target.value });
+                      if (formErrors.subject) setFormErrors({ ...formErrors, subject: undefined });
+                    }}
+                    placeholder={
+                      lang === 'fa'
+                        ? 'مثال: پیشنهاد همکاری در توسعه نرم‌افزار / مشاوره معماری'
+                        : 'e.g. ASP.NET Project Collaboration / Architectural Consultation'
+                    }
+                    className={`w-full min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-100/90 dark:bg-slate-900/80 border text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all ${
+                      formErrors.subject
+                        ? 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/30'
+                        : 'border-slate-200 dark:border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
+                    }`}
+                  />
+                  {formErrors.subject && (
+                    <p className="mt-1 text-[11px] text-rose-500 font-medium animate-in fade-in">
+                      {formErrors.subject}
+                    </p>
+                  )}
+                </div>
+
+                {/* Row 3: Message Textarea */}
+                <div>
+                  <label htmlFor="contact-message" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                    <span className="flex items-center gap-1.5">
+                      <MessageSquare className="w-3.5 h-3.5 text-emerald-500" />
+                      <span>{t.formMessage[lang]}</span>
+                      <span className="text-rose-500">*</span>
+                    </span>
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows={5}
+                    value={formData.message}
+                    onChange={(e) => {
+                      setFormData({ ...formData, message: e.target.value });
+                      if (formErrors.message) setFormErrors({ ...formErrors, message: undefined });
+                    }}
+                    placeholder={
+                      lang === 'fa'
+                        ? 'متن کامل پیام، شرح پروژه، تکنولوژی‌های مورد نظر یا جزئیات پیشنهاد خود را اینجا بنویسید...'
+                        : 'Describe your project specifications, required technology stack, or inquiry details here...'
+                    }
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-100/90 dark:bg-slate-900/80 border text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all resize-y ${
+                      formErrors.message
+                        ? 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/30'
+                        : 'border-slate-200 dark:border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
+                    }`}
+                  />
+                  {formErrors.message && (
+                    <p className="mt-1 text-[11px] text-rose-500 font-medium animate-in fade-in">
+                      {formErrors.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Submit Action */}
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500 hover:from-emerald-500 hover:to-cyan-400 shadow-glow transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-75 disabled:pointer-events-none"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>{t.formSending[lang]}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>{t.sendMessage[lang]}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Micro Hint */}
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-1 text-center leading-relaxed">
+                  {lang === 'fa'
+                    ? 'پیام شما به صورت مستقیم و در پس‌زمینه به mostafa.abedi554@gmail.com ارسال می‌شود و برنامه‌ای در دستگاه شما باز نخواهد شد.'
+                    : 'Your message is submitted directly in the background to mostafa.abedi554@gmail.com without opening external apps.'}
+                </p>
+              </form>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+    </section>
+  );
+};

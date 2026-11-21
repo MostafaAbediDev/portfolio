@@ -1,0 +1,243 @@
+@import url('https://cdn.jsdelivr.net/gh/AmirAbbasVafaee/persian-fonts-cdn@main/css/iran-yekan.css');
+@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/Vazirmatn-FD-font-face.css');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Vazirmatn:wght@200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Comprehensive @font-face declarations for IRANYekan (ایران یکان) across all weights */
+@font-face {
+  font-family: 'IRANYekan';
+  src: local('IRANYekan Thin'), local('IranYekan Thin'), local('IRANYekanWeb-Thin'), local('IRANYekanWebThin'),
+       url('https://cdn.jsdelivr.net/gh/AmirAbbasVafaee/persian-fonts-cdn@main/fonts/iran-yekan/IRANYekanWebThin.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: local('IRANYekan Light'), local('IranYekan Light'), local('IRANYekanWeb-Light'), local('IRANYekanWebLight'),
+       url('https://cdn.jsdelivr.net/gh/AmirAbbasVafaee/persian-fonts-cdn@main/fonts/iran-yekan/IRANYekanWebLight.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: local('IRANYekan Regular'), local('IRANYekan'), local('IranYekan'), local('IRANYekanWeb'), local('IRAN Yekan'), local('IRANYekanWebRegular'),
+       url('https://cdn.jsdelivr.net/gh/AmirAbbasVafaee/persian-fonts-cdn@main/fonts/iran-yekan/IRANYekanWebRegular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: local('IRANYekan Medium'), local('IranYekan Medium'), local('IRANYekanWeb-Medium'), local('IRANYekanWebMedium'),
+       url('https://cdn.jsdelivr.net/gh/AmirAbbasVafaee/persian-fonts-cdn@main/fonts/iran-yekan/IRANYekanWebMedium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: local('IRANYekan SemiBold'), local('IranYekan SemiBold'), local('IRANYekanWeb-SemiBold'), local('IRANYekan Bold'), local('IranYekan Bold'), local('IRANYekanWebBold'),
+       url('https://cdn.jsdelivr.net/gh/AmirAbbasVafaee/persian-fonts-cdn@main/fonts/iran-yekan/IRANYekanWebBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: local('IRANYekan Bold'), local('IranYekan Bold'), local('IRANYekanWeb-Bold'), local('IRANYekanWebBold'),
+       url('https://cdn.jsdelivr.net/gh/AmirAbbasVafaee/persian-fonts-cdn@main/fonts/iran-yekan/IRANYekanWebBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: local('IRANYekan ExtraBold'), local('IranYekan ExtraBold'), local('IRANYekanWeb-ExtraBold'), local('IRANYekanWebExtraBold'),
+       url('https://cdn.jsdelivr.net/gh/AmirAbbasVafaee/persian-fonts-cdn@main/fonts/iran-yekan/IRANYekanWebExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANYekan';
+  src: local('IRANYekan Black'), local('IranYekan Black'), local('IRANYekanWeb-Black'), local('IRANYekanWebBlack'),
+       url('https://cdn.jsdelivr.net/gh/AmirAbbasVafaee/persian-fonts-cdn@main/fonts/iran-yekan/IRANYekanWebBlack.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #070b12;
+  --foreground: #f1f5f9;
+  --card-bg: rgba(13, 20, 36, 0.72);
+  --card-border: rgba(148, 163, 184, 0.12);
+  --font-iranyekan: 'IRANYekan', 'IranYekan', 'IRANYekanWeb', 'IRAN Yekan', 'ایران یکان', 'Vazirmatn FD', 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+  --font-heading: 'IRANYekan', 'IranYekan', 'IRANYekanWeb', 'IRAN Yekan', 'ایران یکان', 'Vazirmatn FD', 'Vazirmatn', Tahoma, sans-serif;
+  --font-kalameh: 'IRANYekan', 'IranYekan', 'IRANYekanWeb', 'IRAN Yekan', 'ایران یکان', 'Vazirmatn FD', 'Vazirmatn', Tahoma, sans-serif;
+  --font-vazirmatn: 'IRANYekan', 'IranYekan', 'Vazirmatn FD', 'Vazirmatn', 'Shabnam', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'IRANYekan', 'IranYekan', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+html.light, .light {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card-bg: rgba(255, 255, 255, 0.90);
+  --card-border: rgba(203, 213, 225, 0.7);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-iranyekan);
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Universal IRANYekan Typography: IRANYekan for headings, titles, badges, and all body text */
+[dir="rtl"] {
+  font-family: var(--font-iranyekan);
+  letter-spacing: -0.012em;
+  line-height: 1.82;
+  word-spacing: 0.02em;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6,
+[dir="rtl"] .font-heading,
+.font-heading {
+  font-family: var(--font-iranyekan);
+  letter-spacing: -0.018em;
+  line-height: 1.35;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+[dir="rtl"] button,
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select,
+[dir="rtl"] span,
+[dir="rtl"] p,
+[dir="rtl"] a,
+[dir="rtl"] strong,
+[dir="rtl"] b {
+  font-family: var(--font-iranyekan);
+}
+
+[dir="ltr"] {
+  font-family: var(--font-sans);
+  letter-spacing: -0.012em;
+  line-height: 1.6;
+}
+
+[dir="ltr"] h1,
+[dir="ltr"] h2,
+[dir="ltr"] h3,
+[dir="ltr"] h4,
+[dir="ltr"] h5,
+[dir="ltr"] h6,
+[dir="ltr"] .font-heading {
+  font-family: var(--font-sans);
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070b12;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
+}
+
+/* Glass Card */
+.glass-card {
+  background-color: var(--card-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--card-border);
+}
+
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -12px rgba(16, 185, 129, 0.18);
+}
+
+/* Glow effects */
+.glow-dot {
+  box-shadow: 0 0 14px #10b981;
+}
+
+.shadow-glow-avatar {
+  box-shadow: 0 0 50px -5px rgba(16, 185, 129, 0.45), 0 0 30px -2px rgba(6, 182, 212, 0.35), 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* Text Gradients */
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-subtle {
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.light .text-gradient-subtle {
+  background: linear-gradient(135deg, #0f172a 0%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
