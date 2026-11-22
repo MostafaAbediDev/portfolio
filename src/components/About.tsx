@@ -6,7 +6,6 @@ import { usePortfolio } from '../context/PortfolioContext';
 import { personalInfo, educationList, certificates } from '../data/portfolioData';
 import {
   GraduationCap,
-  Calendar,
   MapPin,
   Award,
   CheckCircle2,
@@ -63,7 +62,7 @@ export const About: React.FC = () => {
               </p>
 
               {/* Personal Quick Info Pills */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
+              <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
                 <div className="flex items-center gap-2.5 text-xs text-slate-600 dark:text-slate-300">
                   <MapPin className="w-4 h-4 text-emerald-500 shrink-0" />
                   <span>
@@ -71,15 +70,6 @@ export const About: React.FC = () => {
                       {lang === 'fa' ? 'محل سکونت:' : 'Location:'}
                     </strong>{' '}
                     {personalInfo.location[lang]}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs text-slate-600 dark:text-slate-300">
-                  <Calendar className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>
-                    <strong className="text-slate-900 dark:text-white">
-                      {lang === 'fa' ? 'زادروز:' : 'Birth Date:'}
-                    </strong>{' '}
-                    {personalInfo.birthDate[lang]}
                   </span>
                 </div>
               </div>
@@ -167,9 +157,6 @@ export const About: React.FC = () => {
                     <span className="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400">
                       {edu.period[lang]}
                     </span>
-                    <div className="mt-2 px-2.5 py-1 rounded-lg bg-emerald-500/10 text-xs font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                      GPA: {edu.gpa}
-                    </div>
                   </div>
                 </div>
 

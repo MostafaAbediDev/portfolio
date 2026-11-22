@@ -543,18 +543,15 @@ export const educationList: EducationItem[] = [
       fa: 'مهر ۱۴۰۳ - اکنون',
       en: 'Oct 2024 - Present',
     },
-    gpa: '18.76 / 20',
     status: {
-      fa: 'در حال تحصیل (دانشجوی ممتاز ارشد - معدل ۱۸.۷۶)',
-      en: 'In Progress (Distinguished Honor Student - GPA 18.76)',
+      fa: 'در حال تحصیل (دانشجوی ممتاز ارشد)',
+      en: 'In Progress (Distinguished Graduate Student)',
     },
     highlights: {
       fa: [
-        'معدل الف ارشد: ۱۸.۷۶',
         'پژوهش در زمینه‌های سیستم‌های توزیع‌شده، محاسبات ابری/مه و الگوریتم‌های هوش مصنوعی',
       ],
       en: [
-        'Top Graduate Honor GPA: 18.76 / 20',
         'Advanced research in Distributed Systems, Fog/Cloud Computing, and AI optimization',
       ],
     },
@@ -577,10 +574,9 @@ export const educationList: EducationItem[] = [
       fa: '۱۳۹۸ - ۱۴۰۲',
       en: '2019 - 2023',
     },
-    gpa: '16.60 / 20',
     status: {
-      fa: 'فارغ‌التحصیل با موفقیت (معدل ۱۶.۶۰)',
-      en: 'Graduated Successfully (GPA 16.60)',
+      fa: 'فارغ‌التحصیل با موفقیت',
+      en: 'Graduated Successfully',
     },
     highlights: {
       fa: [
@@ -770,5 +766,5 @@ export const uiStrings: UIStrings = {
   designedWith: { fa: 'طراحی و توسعه توسط مصطفی عابدی', en: 'Designed & Developed by Mostafa Abedi' },
   readPublication: { fa: 'مشاهده و مطالعه مقاله در سیویلیکا (Civilica)', en: 'View Article on Civilica' },
   verifiedCredential: { fa: 'دارای پروانه و مجوز معتبر صنفی', en: 'Verified Professional Credential' },
-  contactFormTitle: { fa: 'فرم تماس با مصطفی', en: 'Contact Mostafa' },
+  contactFormTitle: { fa: 'ارتباط با من', en: 'Connect With Me' },
 };

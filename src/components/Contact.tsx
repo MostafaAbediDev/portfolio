@@ -4,15 +4,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePortfolio } from '../context/PortfolioContext';
 import {
-  ExternalLink,
-  Copy,
   Check,
-  MessageCircle,
   Send,
-  Instagram,
   Mail,
-  Phone,
-  Linkedin,
   User,
   AtSign,
   FileText,
@@ -24,7 +18,6 @@ import {
 
 export const Contact: React.FC = () => {
   const { lang, t } = usePortfolio();
-  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -45,33 +38,7 @@ export const Contact: React.FC = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isPendingActivation, setIsPendingActivation] = useState(false);
-  const [copiedMessage, setCopiedMessage] = useState(false);
   const [submittedAt, setSubmittedAt] = useState<string>('');
-
-  const handleCopy = async (text: string, id: string) => {
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.left = '-999999px';
-        textarea.style.top = '-999999px';
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
-        document.execCommand('copy');
-        textarea.remove();
-      }
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(null), 2500);
-    } catch (err) {
-      console.warn('Clipboard copy fallback:', err);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(null), 2500);
-    }
-  };
 
   const validate = (): boolean => {
     const errors: {
@@ -105,35 +72,6 @@ export const Contact: React.FC = () => {
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
-  };
-
-  const getFormattedMessage = (customTime?: string) => {
-    const timeString = customTime || submittedAt || new Date().toLocaleString(lang === 'fa' ? 'fa-IR' : 'en-US');
-    if (lang === 'fa') {
-      return (
-        `سلام مصطفی عزیز،\n\n` +
-        `پیام جدیدی از طریق ${t.contactFormTitle[lang]} ارسال شده است:\n\n` +
-        `👤 فرستنده: ${formData.name.trim()}\n` +
-        `📞 اطلاعات تماس (ایمیل/شماره): ${formData.contact.trim()}\n` +
-        `📌 موضوع: ${formData.subject.trim()}\n` +
-        `⏰ زمان ارسال: ${timeString}\n\n` +
-        `💬 شرح پیام:\n${formData.message.trim()}\n\n` +
-        `----------------------------------------\n` +
-        `ارسال مستقیم به mostafa.abedi554@gmail.com از وب‌سایت مصطفی عابدی`
-      );
-    } else {
-      return (
-        `Hi Mostafa,\n\n` +
-        `You have received a new inquiry via ${t.contactFormTitle[lang]}:\n\n` +
-        `👤 Sender: ${formData.name.trim()}\n` +
-        `📞 Contact (Email/Phone): ${formData.contact.trim()}\n` +
-        `📌 Subject: ${formData.subject.trim()}\n` +
-        `⏰ Timestamp: ${timeString}\n\n` +
-        `💬 Message:\n${formData.message.trim()}\n\n` +
-        `----------------------------------------\n` +
-        `Sent directly to mostafa.abedi554@gmail.com from Mostafa Abedi's Portfolio`
-      );
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -212,32 +150,10 @@ export const Contact: React.FC = () => {
       } else {
         setSubmitError(
           lang === 'fa'
-            ? 'متأسفانه در برقراری ارتباط با سرور ارسال پیام خطایی رخ داد. لطفاً مجدداً امتحان کنید یا از راه‌های ارتباط مستقیم بالای فرم پیام دهید.'
-            : 'Failed to deliver message. Please try again or reach out directly using the direct channels above.'
+            ? 'متأسفانه در برقراری ارتباط با سرور ارسال پیام خطایی رخ داد. لطفاً مجدداً امتحان کنید یا از راه‌های ارتباط مستقیم انتهای صفحه پیام دهید.'
+            : 'Failed to deliver message. Please try again or reach out directly using the direct channels in the footer.'
         );
       }
-    }
-  };
-
-  const handleCopyMessageDraft = async () => {
-    const text = getFormattedMessage();
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.left = '-999999px';
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        textarea.remove();
-      }
-      setCopiedMessage(true);
-      setTimeout(() => setCopiedMessage(false), 2500);
-    } catch (err) {
-      console.warn('Copy failed:', err);
     }
   };
 
@@ -250,84 +166,9 @@ export const Contact: React.FC = () => {
     setSubmitSuccess(false);
   };
 
-  const contactChannels = [
-    {
-      id: 'whatsapp',
-      name: { fa: 'واتس‌اپ', en: 'WhatsApp' },
-      identifier: 'mstf_abedi',
-      copyValue: 'mstf_abedi',
-      link: 'https://wa.me/989177249281',
-      copyLabel: { fa: 'کپی آیدی واتس‌اپ', en: 'Copy WhatsApp ID' },
-      icon: MessageCircle,
-      colorClass: 'text-emerald-500 dark:text-emerald-400',
-      badgeClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
-      hoverClass: 'hover:border-emerald-500/40 hover:bg-emerald-500/5',
-    },
-    {
-      id: 'telegram',
-      name: { fa: 'تلگرام', en: 'Telegram' },
-      identifier: '@mstf_abedi',
-      copyValue: 'mstf_abedi',
-      link: 'https://t.me/mstf_abedi',
-      copyLabel: { fa: 'کپی آیدی تلگرام', en: 'Copy Telegram ID' },
-      icon: Send,
-      colorClass: 'text-sky-500 dark:text-sky-400',
-      badgeClass: 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20',
-      hoverClass: 'hover:border-sky-500/40 hover:bg-sky-500/5',
-    },
-    {
-      id: 'linkedin',
-      name: { fa: 'لینکدین', en: 'LinkedIn' },
-      identifier: 'mostafaaaa-abediiii',
-      copyValue: 'mostafaaaa-abediiii',
-      link: 'https://linkedin.com/in/mostafaaaa-abediiii',
-      copyLabel: { fa: 'کپی آیدی لینکدین', en: 'Copy LinkedIn' },
-      icon: Linkedin,
-      colorClass: 'text-blue-500 dark:text-blue-400',
-      badgeClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
-      hoverClass: 'hover:border-blue-500/40 hover:bg-blue-500/5',
-    },
-    {
-      id: 'instagram',
-      name: { fa: 'اینستاگرام', en: 'Instagram' },
-      identifier: 'mostafa.__.abediii',
-      copyValue: 'mostafa.__.abediii',
-      link: 'https://instagram.com/mostafa.__.abediii',
-      copyLabel: { fa: 'کپی آیدی اینستاگرام', en: 'Copy Instagram' },
-      icon: Instagram,
-      colorClass: 'text-pink-500 dark:text-pink-400',
-      badgeClass: 'bg-pink-500/10 text-pink-600 dark:text-pink-400 border-pink-500/20',
-      hoverClass: 'hover:border-pink-500/40 hover:bg-pink-500/5',
-    },
-    {
-      id: 'gmail',
-      name: { fa: 'جیمیل مستقیم', en: 'Gmail' },
-      identifier: 'mostafa.abedi554@gmail.com',
-      copyValue: 'mostafa.abedi554@gmail.com',
-      link: 'https://mail.google.com/mail/?view=cm&fs=1&to=mostafa.abedi554@gmail.com',
-      copyLabel: { fa: 'کپی ایمیل', en: 'Copy Email' },
-      icon: Mail,
-      colorClass: 'text-rose-500 dark:text-rose-400',
-      badgeClass: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20',
-      hoverClass: 'hover:border-rose-500/40 hover:bg-rose-500/5',
-    },
-    {
-      id: 'phone',
-      name: { fa: 'پیامک و تماس', en: 'SMS & Call' },
-      identifier: '09177249281',
-      copyValue: '09177249281',
-      link: 'sms:+989177249281',
-      copyLabel: { fa: 'کپی شماره همراه', en: 'Copy Phone' },
-      icon: Phone,
-      colorClass: 'text-amber-500 dark:text-amber-400',
-      badgeClass: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
-      hoverClass: 'hover:border-amber-500/40 hover:bg-amber-500/5',
-    },
-  ];
-
   return (
     <section id="contact" className="py-20 sm:py-24 relative overflow-hidden">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -345,8 +186,8 @@ export const Contact: React.FC = () => {
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
             {lang === 'fa'
-              ? 'پیام خود را از طریق فرم زیر مستقیماً ارسال فرمایید یا از راه‌های ارتباط سریع زیر در تماس باشید.'
-              : 'Send your message directly via the form below or connect via the quick channels below.'}
+              ? 'پیام خود را از طریق فرم زیر مستقیماً ارسال فرمایید. در اسرع وقت پاسخگوی شما خواهم بود.'
+              : 'Send your message directly via the form below. I will respond as soon as possible.'}
           </p>
         </motion.div>
 
@@ -382,62 +223,6 @@ export const Contact: React.FC = () => {
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 self-start sm:self-auto">
               <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
               <span>{lang === 'fa' ? 'ارسال بدون خروج از سایت' : 'Direct In-App Delivery'}</span>
-            </div>
-          </div>
-
-          {/* Integrated Minimalist Direct Channels Dock */}
-          <div className="mb-8 p-3.5 sm:p-4 rounded-2xl bg-slate-100/70 dark:bg-slate-900/60 border border-slate-200/70 dark:border-slate-800/70">
-            <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-2.5 flex items-center justify-between">
-              <span className="flex items-center gap-1.5">
-                <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
-                <span>{lang === 'fa' ? 'راه‌های ارتباط مستقیم و فوری:' : 'Instant Direct Channels:'}</span>
-              </span>
-              <span className="text-[10px] text-slate-400">
-                {lang === 'fa' ? 'کلیک جهت پیام یا کپی' : 'Click to reach or copy'}
-              </span>
-            </div>
-
-            {/* Modern Minimalist Pills */}
-            <div className="flex flex-wrap items-center gap-2">
-              {contactChannels.map((channel) => {
-                const Icon = channel.icon;
-                const isCopied = copiedId === channel.id;
-
-                return (
-                  <div
-                    key={channel.id}
-                    className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold bg-white/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 ${channel.hoverClass} text-slate-700 dark:text-slate-200 transition-all duration-200 shadow-sm`}
-                  >
-                    <a
-                      href={channel.link}
-                      target={channel.link.startsWith('http') ? '_blank' : undefined}
-                      rel={channel.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="inline-flex items-center gap-1.5 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
-                      title={`${channel.name[lang]}: ${channel.identifier}`}
-                    >
-                      <Icon className={`w-3.5 h-3.5 ${channel.colorClass}`} />
-                      <span>{channel.name[lang]}</span>
-                      <ExternalLink className="w-2.5 h-2.5 text-slate-400 opacity-60" />
-                    </a>
-
-                    <span className="text-slate-300 dark:text-slate-700">|</span>
-
-                    <button
-                      type="button"
-                      onClick={() => handleCopy(channel.copyValue, channel.id)}
-                      className="p-0.5 rounded-md text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
-                      title={channel.copyLabel[lang]}
-                      aria-label={isCopied ? t.copied[lang] : channel.copyLabel[lang]}
-                    >
-                      {isCopied ? (
-                        <Check className="w-3 h-3 text-emerald-500" />
-                      ) : (
-                        <Copy className="w-3 h-3" />
-                      )}
-                    </button>
-                  </div>
-                );
-              })}
             </div>
           </div>
 
@@ -514,63 +299,15 @@ export const Contact: React.FC = () => {
                   </div>
                 </div>
 
-                {/* One-click Instant Channels Direct Dispatch */}
-                <div className="pt-1">
-                  <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-2">
-                    {lang === 'fa' ? 'ارسال مستقیم نسخه پیام در پیام‌رسان‌ها یا ایمیل:' : 'Send a copy directly via instant messaging or Gmail:'}
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <a
-                      href={`https://mail.google.com/mail/?view=cm&fs=1&to=mostafa.abedi554@gmail.com&su=${encodeURIComponent(formData.subject.trim())}&body=${encodeURIComponent(getFormattedMessage())}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 hover:bg-rose-500/20 transition-all shadow-sm"
-                    >
-                      <Mail className="w-3.5 h-3.5" />
-                      <span>{lang === 'fa' ? 'جیمیل وب' : 'Gmail Web'}</span>
-                      <ExternalLink className="w-2.5 h-2.5 opacity-60" />
-                    </a>
-                    <a
-                      href={`https://t.me/mstf_abedi?text=${encodeURIComponent(getFormattedMessage())}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 hover:bg-sky-500/20 transition-all shadow-sm"
-                    >
-                      <Send className="w-3.5 h-3.5" />
-                      <span>{lang === 'fa' ? 'تلگرام' : 'Telegram'}</span>
-                      <ExternalLink className="w-2.5 h-2.5 opacity-60" />
-                    </a>
-                    <a
-                      href={`https://wa.me/989177249281?text=${encodeURIComponent(getFormattedMessage())}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all shadow-sm"
-                    >
-                      <MessageCircle className="w-3.5 h-3.5" />
-                      <span>{lang === 'fa' ? 'واتس‌اپ' : 'WhatsApp'}</span>
-                      <ExternalLink className="w-2.5 h-2.5 opacity-60" />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Action Buttons: Send Another Message & Copy Draft */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                {/* Action Button: Send Another Message */}
+                <div className="pt-2">
                   <button
                     type="button"
                     onClick={handleResetForm}
-                    className="min-h-[46px] flex-1 inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500 hover:from-emerald-500 hover:to-cyan-400 shadow-glow transition-all active:scale-95"
+                    className="w-full sm:w-auto min-h-[46px] inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500 hover:from-emerald-500 hover:to-cyan-400 shadow-glow transition-all active:scale-95"
                   >
                     <RotateCcw className="w-4 h-4" />
                     <span>{lang === 'fa' ? 'ارسال پیام دیگر' : 'Send Another Message'}</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleCopyMessageDraft}
-                    className="min-h-[46px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-all active:scale-95"
-                  >
-                    {copiedMessage ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
-                    <span>{copiedMessage ? (lang === 'fa' ? 'کپی شد!' : 'Copied!') : (lang === 'fa' ? 'کپی متن پیام' : 'Copy Message')}</span>
                   </button>
                 </div>
               </motion.div>

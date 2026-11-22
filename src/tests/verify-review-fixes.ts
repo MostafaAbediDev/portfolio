@@ -44,16 +44,21 @@ assert(
   'route.ts must format full contact details into message body'
 );
 assert(
-  contactContent.includes('https://mail.google.com/mail/?view=cm') &&
-  contactContent.includes('https://t.me/mstf_abedi') &&
-  contactContent.includes('https://wa.me/989177249281'),
-  'Contact.tsx success view must provide 1-click Gmail, Telegram, and WhatsApp direct links'
+  footerContent.includes('https://mail.google.com/mail/?view=cm') &&
+  footerContent.includes('https://t.me/mstf_abedi') &&
+  footerContent.includes('https://wa.me/989177249281'),
+  'Footer.tsx must provide 1-click Gmail, Telegram, and WhatsApp direct links'
+);
+assert(
+  !contactContent.includes('کپی متن پیام') &&
+  !contactContent.includes('ارسال مستقیم نسخه پیام در پیام‌رسان‌ها'),
+  'Contact.tsx success view must NOT contain redundant messenger links or copy draft button'
 );
 assert(
   contactContent.includes('اطلاعیه راه‌اندازی (مخصوص مدیر پورتفولیو):'),
   'Contact.tsx must clearly designate one-time FormSubmit activation notice as an admin notice'
 );
-console.log('✓ Requirement 3 (Contact form payload & messenger backup) verified successfully.');
+console.log('✓ Requirement 3 (Contact form payload & Footer direct channels) verified successfully.');
 
 // Test 4: Verify Standalone Hero Avatar position without conflicting classes
 const heroPath = path.join(process.cwd(), 'src', 'components', 'Hero.tsx');

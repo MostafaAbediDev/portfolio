@@ -42,45 +42,47 @@ assert(
 );
 console.log('✓ Requirement 1 (Navbar brand cleanliness) passed successfully.');
 
-// Test 2 & 3: Unified Contact Section, Title Change, and Minimalist Dock
+// Test 2 & 3: Unified Contact Section, Title Change, and Channels Dock in Footer
 const contactPath = path.join(process.cwd(), 'src', 'components', 'Contact.tsx');
 const contactContent = fs.readFileSync(contactPath, 'utf-8');
+const footerPath = path.join(process.cwd(), 'src', 'components', 'Footer.tsx');
+const footerContent = fs.readFileSync(footerPath, 'utf-8');
 
-// Verify title change in UIStrings and Contact component
+// Verify title change in UIStrings and Contact component (Task 8: "ارتباط با من" / "Connect With Me")
 assert.strictEqual(
   uiStrings.contactFormTitle.fa,
-  'فرم تماس با مصطفی',
-  'contactFormTitle.fa must be "فرم تماس با مصطفی"'
+  'ارتباط با من',
+  'contactFormTitle.fa must be "ارتباط با من"'
 );
 assert.strictEqual(
   uiStrings.contactFormTitle.en,
-  'Contact Mostafa',
-  'contactFormTitle.en must be "Contact Mostafa"'
+  'Connect With Me',
+  'contactFormTitle.en must be "Connect With Me"'
 );
 assert(
   contactContent.includes('t.contactFormTitle[lang]'),
   'Contact.tsx must use t.contactFormTitle[lang]'
 );
 
-// Verify unified minimalist direct channels dock
+// Verify unified direct channels dock moved to Footer (Task 9)
 assert(
-  contactContent.includes('contactChannels'),
-  'Contact.tsx must include contactChannels data structure'
+  footerContent.includes('contactChannels'),
+  'Footer.tsx must include contactChannels data structure'
 );
 assert(
-  contactContent.includes('whatsapp') &&
-  contactContent.includes('telegram') &&
-  contactContent.includes('linkedin') &&
-  contactContent.includes('instagram') &&
-  contactContent.includes('gmail') &&
-  contactContent.includes('phone'),
-  'Contact.tsx must integrate WhatsApp, Telegram, LinkedIn, Instagram, Gmail, and SMS/Call'
+  footerContent.includes('whatsapp') &&
+  footerContent.includes('telegram') &&
+  footerContent.includes('linkedin') &&
+  footerContent.includes('instagram') &&
+  footerContent.includes('gmail') &&
+  footerContent.includes('phone'),
+  'Footer.tsx must integrate WhatsApp, Telegram, LinkedIn, Instagram, Gmail, and SMS/Call'
 );
 assert(
   contactContent.includes('glass-card') && contactContent.includes('AnimatePresence'),
-  'Contact.tsx must unify channels and form within a single glass-card with smooth animation'
+  'Contact.tsx must provide a sleek form within a glass-card with smooth animation'
 );
-console.log('✓ Requirements 2 & 3 (Unified Contact Card & Title Change) passed successfully.');
+console.log('✓ Requirements 2 & 3 (Contact Title & Footer Channels Dock) passed successfully.');
 
 // Test 4: Direct In-App Email Dispatch Without Opening External Apps
 const routePath = path.join(process.cwd(), 'src', 'app', 'api', 'contact', 'route.ts');

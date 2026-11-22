@@ -1,25 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { usePortfolio } from '../context/PortfolioContext';
 import { projects } from '../data/portfolioData';
 import {
   FolderGit2,
   ExternalLink,
   Info,
-  Monitor,
-  Globe,
 } from 'lucide-react';
 
 export const Projects: React.FC = () => {
   const { lang, t, setSelectedProject } = usePortfolio();
-  const [filter, setFilter] = useState<'all' | 'web' | 'desktop'>('all');
-
-  const filteredProjects =
-    filter === 'all'
-      ? projects
-      : projects.filter((p) => p.category === filter);
 
   return (
     <section id="projects" className="py-20 relative bg-slate-50/50 dark:bg-slate-950/40">
@@ -30,7 +22,7 @@ export const Projects: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center max-w-3xl mx-auto mb-12"
+          className="text-center max-w-3xl mx-auto mb-12 sm:mb-14"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-3">
             <FolderGit2 className="w-3 h-3 text-emerald-500" />
@@ -46,55 +38,17 @@ export const Projects: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10 sm:mb-12">
-          <button
-            onClick={() => setFilter('all')}
-            className={`min-h-[40px] px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center justify-center ${
-              filter === 'all'
-                ? 'bg-emerald-500 text-white shadow-glow'
-                : 'glass-card text-slate-600 dark:text-slate-300 hover:text-emerald-500'
-            }`}
-          >
-            {t.allCategories[lang]}
-          </button>
-          <button
-            onClick={() => setFilter('web')}
-            className={`min-h-[40px] px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
-              filter === 'web'
-                ? 'bg-emerald-500 text-white shadow-glow'
-                : 'glass-card text-slate-600 dark:text-slate-300 hover:text-emerald-500'
-            }`}
-          >
-            <Globe className="w-3.5 h-3.5" />
-            <span>{t.webProjects[lang]}</span>
-          </button>
-          <button
-            onClick={() => setFilter('desktop')}
-            className={`min-h-[40px] px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
-              filter === 'desktop'
-                ? 'bg-emerald-500 text-white shadow-glow'
-                : 'glass-card text-slate-600 dark:text-slate-300 hover:text-emerald-500'
-            }`}
-          >
-            <Monitor className="w-3.5 h-3.5" />
-            <span>{t.desktopProjects[lang]}</span>
-          </button>
-        </div>
-
         {/* Projects Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <AnimatePresence>
-            {filteredProjects.map((project) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.35 }}
-                className="glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col justify-between group border shadow-sm"
-              >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col justify-between group border shadow-sm"
+            >
                 <div>
                   {/* Project Card Header Visual Banner */}
                   <div
@@ -175,8 +129,7 @@ export const Projects: React.FC = () => {
                 </div>
               </motion.div>
             ))}
-          </AnimatePresence>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

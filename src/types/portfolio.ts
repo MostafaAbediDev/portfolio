@@ -26,7 +26,7 @@ export interface PersonalInfo {
   location: { fa: string; en: string };
   email: string;
   phone: string;
-  birthDate: { fa: string; en: string };
+  birthDate?: { fa: string; en: string };
   status: { fa: string; en: string };
   socials: SocialLink[];
   stats: StatItem[];
@@ -86,7 +86,7 @@ export interface EducationItem {
   field: { fa: string; en: string };
   institution: { fa: string; en: string };
   period: { fa: string; en: string };
-  gpa: string;
+  gpa?: string;
   status: { fa: string; en: string };
   highlights?: { fa: string[]; en: string[] };
 }

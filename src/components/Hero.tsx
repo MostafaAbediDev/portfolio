@@ -6,7 +6,6 @@ import { usePortfolio } from '../context/PortfolioContext';
 import { personalInfo } from '../data/portfolioData';
 import {
   ArrowRight,
-  Download,
   Mail,
   Linkedin,
   Send,
@@ -61,14 +60,6 @@ export const Hero: React.FC = () => {
                   />
                   <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent pointer-events-none" />
                 </div>
-              </div>
-
-              {/* Live Availability Status Chip */}
-              <div className="absolute -bottom-3 inset-x-0 mx-auto w-fit max-w-[92%] flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border border-emerald-500/40 shadow-xl">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse glow-dot shrink-0" />
-                <span className="text-[11px] sm:text-xs font-bold text-emerald-300 truncate">
-                  {lang === 'fa' ? 'فعال و آماده همکاری سازمانی' : 'Available for High-Impact Roles'}
-                </span>
               </div>
             </div>
           </motion.div>
@@ -133,7 +124,7 @@ export const Hero: React.FC = () => {
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 font-bold">
                 <GraduationCap className="w-3.5 h-3.5" />
-                <span>GPA 18.76</span>
+                <span>{lang === 'fa' ? 'کارشناسی ارشد کامپیوتر' : 'M.Sc. Computer Eng.'}</span>
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/25 font-semibold">
                 <Award className="w-3.5 h-3.5" />
@@ -158,17 +149,6 @@ export const Hero: React.FC = () => {
                 <Mail className="w-4 h-4 text-emerald-500" />
                 <span>{t.contactMe[lang]}</span>
               </a>
-
-              <a
-                href={personalInfo.resumeUrl || '/Mostafa-Abedi-Resume.pdf'}
-                download="Mostafa-Abedi-Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 transition-all hover:scale-105 active:scale-95"
-              >
-                <Download className="w-4 h-4" />
-                <span>{t.downloadCv[lang]}</span>
-              </a>
             </div>
 
             {/* Quick Social & Contact Icons */}
@@ -190,11 +170,11 @@ export const Hero: React.FC = () => {
                       href={social.url}
                       target={social.url.startsWith('http') ? '_blank' : undefined}
                       rel={social.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-emerald-500 hover:text-white text-slate-600 dark:text-slate-300 transition-all hover:scale-110 shadow-sm"
+                      className="group relative min-h-[44px] min-w-[44px] flex items-center justify-center p-2.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 text-slate-600 dark:text-slate-300 shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:border-emerald-500/60 hover:bg-gradient-to-tr hover:from-emerald-500 hover:to-teal-500 hover:text-white hover:shadow-[0_0_20px_rgba(16,185,129,0.35)] active:scale-95"
                       aria-label={social.label}
                       title={social.label}
                     >
-                      <IconComponent className="w-4 h-4" />
+                      <IconComponent className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
                     </a>
                   );
                 })}
