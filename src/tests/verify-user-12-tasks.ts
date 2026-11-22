@@ -17,6 +17,10 @@ assert(
   layoutContent.includes('/favicon.svg'),
   'layout.tsx metadata must reference /favicon.svg'
 );
+assert(
+  layoutContent.includes("shortcut: '/favicon.svg'") && layoutContent.includes("apple: '/favicon.svg'"),
+  'layout.tsx metadata must include shortcut and apple favicon links'
+);
 console.log('✓ Task 1 (Favicon replaced) passed.');
 
 // Task 2: Hero availability chip removed
@@ -61,6 +65,9 @@ assert(
 educationList.forEach((edu) => {
   assert(!edu.gpa, `Education item ${edu.id} should not display gpa`);
   assert(!edu.status.fa.includes('معدل'), `Education status for ${edu.id} must not include GPA`);
+  edu.highlights?.fa?.forEach((h) => {
+    assert(!h.includes('معدل') && !h.includes('GPA'), `Education highlight for ${edu.id} must not mention GPA`);
+  });
 });
 console.log('✓ Task 6 (GPA removed) passed.');
 
@@ -106,6 +113,11 @@ const contactContent = fs.readFileSync(path.join(process.cwd(), 'src', 'componen
 assert(
   !contactContent.includes('contactChannels'),
   'Contact.tsx must NOT contain contactChannels dock'
+);
+assert(
+  footerContent.includes('+989177249281') &&
+  footerContent.includes('@mstf_abedi'),
+  'Footer.tsx channels must use direct callable numbers and valid handles'
 );
 console.log('✓ Task 9 (Channels moved to Footer) passed.');
 
