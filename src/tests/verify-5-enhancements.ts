@@ -39,6 +39,11 @@ assert(
   heroContent.includes('hover:via-rose-500'),
   'Hero.tsx must define Instagram rose/gradient hover styling'
 );
+assert(
+  heroContent.includes('dark:hover:text-white') &&
+  heroContent.includes('dark:hover:border-'),
+  'Hero.tsx must define dark mode hover classes to prevent dark:border and dark:text cascade clobbering'
+);
 console.log('✓ 2. Hero social icons brand hovers verified.');
 
 // 3. Contact Header Tag Removal
@@ -75,6 +80,11 @@ assert(
   contactContent.includes('phone'),
   'Contact.tsx channels card must include WhatsApp, Telegram, LinkedIn, Instagram, Gmail, and Phone'
 );
+assert(
+  contactContent.includes('dark:hover:border-[#25D366]/50') &&
+  contactContent.includes('dark:hover:border-[#229ED9]/50'),
+  'Contact.tsx channel items must include dark:hover:border classes to illuminate brand glows in dark mode'
+);
 console.log('✓ 4. Side-by-side direct channels beside contact form verified.');
 
 // 5. Footer Streamlining
@@ -92,6 +102,10 @@ assert(
 assert(
   footerContent.includes('ArrowUp'),
   'Footer.tsx must retain the back-to-top button'
+);
+assert(
+  footerContent.includes('dark:hover:border-emerald-500/50'),
+  'Footer.tsx Back to Top button must have dark:hover:border-emerald-500/50'
 );
 console.log('✓ 5. Footer streamlined with only back-to-top and center developer branding verified.');
 

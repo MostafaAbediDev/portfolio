@@ -62,6 +62,15 @@ export const Contact: React.FC = () => {
   const [isPendingActivation, setIsPendingActivation] = useState(false);
   const [submittedAt, setSubmittedAt] = useState<string>('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const copyTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const contactChannels: ChannelItem[] = [
     {
@@ -75,7 +84,7 @@ export const Contact: React.FC = () => {
       badgeBg: 'bg-[#25D366]/10 dark:bg-[#25D366]/15',
       badgeText: 'text-[#25D366]',
       badgeBorder: 'border-[#25D366]/30',
-      hoverGlow: 'hover:border-[#25D366]/50 hover:shadow-[0_0_16px_rgba(37,211,102,0.2)]',
+      hoverGlow: 'hover:border-[#25D366]/50 dark:hover:border-[#25D366]/50 hover:shadow-[0_0_16px_rgba(37,211,102,0.2)]',
     },
     {
       id: 'telegram',
@@ -88,7 +97,7 @@ export const Contact: React.FC = () => {
       badgeBg: 'bg-[#229ED9]/10 dark:bg-[#229ED9]/15',
       badgeText: 'text-[#229ED9]',
       badgeBorder: 'border-[#229ED9]/30',
-      hoverGlow: 'hover:border-[#229ED9]/50 hover:shadow-[0_0_16px_rgba(34,158,217,0.2)]',
+      hoverGlow: 'hover:border-[#229ED9]/50 dark:hover:border-[#229ED9]/50 hover:shadow-[0_0_16px_rgba(34,158,217,0.2)]',
     },
     {
       id: 'linkedin',
@@ -101,7 +110,7 @@ export const Contact: React.FC = () => {
       badgeBg: 'bg-[#0A66C2]/10 dark:bg-[#0A66C2]/15',
       badgeText: 'text-[#0A66C2]',
       badgeBorder: 'border-[#0A66C2]/30',
-      hoverGlow: 'hover:border-[#0A66C2]/50 hover:shadow-[0_0_16px_rgba(10,102,194,0.2)]',
+      hoverGlow: 'hover:border-[#0A66C2]/50 dark:hover:border-[#0A66C2]/50 hover:shadow-[0_0_16px_rgba(10,102,194,0.2)]',
     },
     {
       id: 'instagram',
@@ -114,7 +123,7 @@ export const Contact: React.FC = () => {
       badgeBg: 'bg-rose-500/10 dark:bg-rose-500/15',
       badgeText: 'text-rose-500',
       badgeBorder: 'border-rose-500/30',
-      hoverGlow: 'hover:border-rose-500/50 hover:shadow-[0_0_16px_rgba(225,48,108,0.2)]',
+      hoverGlow: 'hover:border-rose-500/50 dark:hover:border-rose-500/50 hover:shadow-[0_0_16px_rgba(225,48,108,0.2)]',
     },
     {
       id: 'gmail',
@@ -127,7 +136,7 @@ export const Contact: React.FC = () => {
       badgeBg: 'bg-[#EA4335]/10 dark:bg-[#EA4335]/15',
       badgeText: 'text-[#EA4335]',
       badgeBorder: 'border-[#EA4335]/30',
-      hoverGlow: 'hover:border-[#EA4335]/50 hover:shadow-[0_0_16px_rgba(234,67,53,0.2)]',
+      hoverGlow: 'hover:border-[#EA4335]/50 dark:hover:border-[#EA4335]/50 hover:shadow-[0_0_16px_rgba(234,67,53,0.2)]',
     },
     {
       id: 'phone',
@@ -140,7 +149,7 @@ export const Contact: React.FC = () => {
       badgeBg: 'bg-emerald-500/10 dark:bg-emerald-500/15',
       badgeText: 'text-emerald-500 dark:text-emerald-400',
       badgeBorder: 'border-emerald-500/30',
-      hoverGlow: 'hover:border-emerald-500/50 hover:shadow-[0_0_16px_rgba(16,185,129,0.2)]',
+      hoverGlow: 'hover:border-emerald-500/50 dark:hover:border-emerald-500/50 hover:shadow-[0_0_16px_rgba(16,185,129,0.2)]',
     },
   ];
 
@@ -161,11 +170,21 @@ export const Contact: React.FC = () => {
         textarea.remove();
       }
       setCopiedId(id);
-      setTimeout(() => setCopiedId(null), 2500);
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+      copyTimeoutRef.current = setTimeout(() => {
+        setCopiedId(null);
+      }, 2500);
     } catch (err) {
       console.warn('Clipboard copy fallback:', err);
       setCopiedId(id);
-      setTimeout(() => setCopiedId(null), 2500);
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+      copyTimeoutRef.current = setTimeout(() => {
+        setCopiedId(null);
+      }, 2500);
     }
   };
 
@@ -684,7 +703,7 @@ export const Contact: React.FC = () => {
                         className={`min-h-[36px] min-w-[36px] px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all duration-200 shrink-0 border ${
                           isCopied
                             ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/40 shadow-sm'
-                            : 'bg-white/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/70 hover:border-emerald-500/40 hover:text-emerald-500 hover:bg-emerald-500/10'
+                            : 'bg-white/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/70 hover:border-emerald-500/40 dark:hover:border-emerald-500/40 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15'
                         }`}
                         title={channel.copyLabel[lang]}
                         aria-label={isCopied ? t.copied[lang] : channel.copyLabel[lang]}

@@ -21,21 +21,21 @@ import {
 const getSocialBrandHoverClasses = (platform: string): string => {
   switch (platform) {
     case 'telegram':
-      return 'hover:bg-[#229ED9] hover:border-[#229ED9] hover:shadow-[0_0_18px_rgba(34,158,217,0.55)] hover:text-white';
+      return 'hover:bg-[#229ED9] hover:border-[#229ED9] hover:shadow-[0_0_18px_rgba(34,158,217,0.55)] hover:text-white dark:hover:bg-[#229ED9] dark:hover:border-[#229ED9] dark:hover:text-white';
     case 'instagram':
-      return 'hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:border-rose-500 hover:shadow-[0_0_18px_rgba(225,48,108,0.55)] hover:text-white';
+      return 'hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:border-rose-500 hover:shadow-[0_0_18px_rgba(225,48,108,0.55)] hover:text-white dark:hover:border-rose-500 dark:hover:text-white';
     case 'linkedin':
-      return 'hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:shadow-[0_0_18px_rgba(10,102,194,0.55)] hover:text-white';
+      return 'hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:shadow-[0_0_18px_rgba(10,102,194,0.55)] hover:text-white dark:hover:bg-[#0A66C2] dark:hover:border-[#0A66C2] dark:hover:text-white';
     case 'whatsapp':
-      return 'hover:bg-[#25D366] hover:border-[#25D366] hover:shadow-[0_0_18px_rgba(37,211,102,0.55)] hover:text-white';
+      return 'hover:bg-[#25D366] hover:border-[#25D366] hover:shadow-[0_0_18px_rgba(37,211,102,0.55)] hover:text-white dark:hover:bg-[#25D366] dark:hover:border-[#25D366] dark:hover:text-white';
     case 'email':
     case 'gmail':
-      return 'hover:bg-[#EA4335] hover:border-[#EA4335] hover:shadow-[0_0_18px_rgba(234,67,53,0.55)] hover:text-white';
+      return 'hover:bg-[#EA4335] hover:border-[#EA4335] hover:shadow-[0_0_18px_rgba(234,67,53,0.55)] hover:text-white dark:hover:bg-[#EA4335] dark:hover:border-[#EA4335] dark:hover:text-white';
     case 'phone':
     case 'sms':
-      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white';
+      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-500 dark:hover:text-white';
     default:
-      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white';
+      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-500 dark:hover:text-white';
   }
 };
 

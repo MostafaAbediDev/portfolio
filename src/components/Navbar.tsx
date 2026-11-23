@@ -202,27 +202,35 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Dropdown Menu Drawer (Sibling to Header for clean z-index & WebKit fixed support) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed top-16 sm:top-[72px] inset-x-0 w-full max-h-[calc(100dvh-4rem)] sm:max-h-[calc(100dvh-4.5rem)] overflow-y-auto bg-white dark:bg-[#070b13] border-b border-slate-200 dark:border-slate-800 shadow-2xl p-4 sm:p-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200 pb-5">
-          <div className="max-w-md mx-auto flex flex-col gap-1.5">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={item.href}
-                onClick={() => {
-                  setActiveSection(item.id);
-                  setMobileMenuOpen(false);
-                }}
-                className={`min-h-[44px] px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center transition-all ${
-                  activeSection === item.id
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold shadow-glow'
-                    : 'text-slate-800 dark:text-slate-100 hover:bg-emerald-500/10 hover:text-emerald-600 dark:hover:text-emerald-400'
-                }`}
-              >
-                {item.label[lang]}
-              </a>
-            ))}
+        <>
+          {/* Backdrop overlay to dismiss on outside tap */}
+          <div
+            className="lg:hidden fixed inset-0 top-16 sm:top-[72px] bg-slate-950/40 backdrop-blur-sm z-40 animate-in fade-in duration-200"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <div className="lg:hidden fixed top-16 sm:top-[72px] inset-x-0 w-full max-h-[calc(100dvh-4rem)] sm:max-h-[calc(100dvh-4.5rem)] overflow-y-auto bg-white dark:bg-[#070b13] border-b border-slate-200 dark:border-slate-800 shadow-2xl p-4 sm:p-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200 pb-5">
+            <div className="max-w-md mx-auto flex flex-col gap-1.5">
+              {navItems.map((item) => (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={() => {
+                    setActiveSection(item.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`min-h-[44px] px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center transition-all ${
+                    activeSection === item.id
+                      ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold shadow-glow'
+                      : 'text-slate-800 dark:text-slate-100 hover:bg-emerald-500/10 hover:text-emerald-600 dark:hover:text-emerald-400'
+                  }`}
+                >
+                  {item.label[lang]}
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
