@@ -64,25 +64,29 @@ assert(
   'Contact.tsx must use t.contactFormTitle[lang]'
 );
 
-// Verify unified direct channels dock moved to Footer (Task 9)
+// Verify unified direct channels beside contact form (moved out of Footer per enhancement #4 & #5)
 assert(
-  footerContent.includes('contactChannels'),
-  'Footer.tsx must include contactChannels data structure'
+  contactContent.includes('contactChannels'),
+  'Contact.tsx must include contactChannels data structure beside the form'
 );
 assert(
-  footerContent.includes('whatsapp') &&
-  footerContent.includes('telegram') &&
-  footerContent.includes('linkedin') &&
-  footerContent.includes('instagram') &&
-  footerContent.includes('gmail') &&
-  footerContent.includes('phone'),
-  'Footer.tsx must integrate WhatsApp, Telegram, LinkedIn, Instagram, Gmail, and SMS/Call'
+  contactContent.includes('whatsapp') &&
+  contactContent.includes('telegram') &&
+  contactContent.includes('linkedin') &&
+  contactContent.includes('instagram') &&
+  contactContent.includes('gmail') &&
+  contactContent.includes('phone'),
+  'Contact.tsx must integrate WhatsApp, Telegram, LinkedIn, Instagram, Gmail, and SMS/Call'
+);
+assert(
+  !footerContent.includes('contactChannels'),
+  'Footer.tsx must NOT include direct channels dock per enhancement #4 & #5'
 );
 assert(
   contactContent.includes('glass-card') && contactContent.includes('AnimatePresence'),
   'Contact.tsx must provide a sleek form within a glass-card with smooth animation'
 );
-console.log('✓ Requirements 2 & 3 (Contact Title & Footer Channels Dock) passed successfully.');
+console.log('✓ Requirements 2 & 3 (Contact Title & Side-by-Side Channels) passed successfully.');
 
 // Test 4: Direct In-App Email Dispatch Without Opening External Apps
 const routePath = path.join(process.cwd(), 'src', 'app', 'api', 'contact', 'route.ts');

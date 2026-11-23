@@ -97,36 +97,34 @@ assert.strictEqual(
 );
 console.log('✓ Task 8 (Contact form title updated) passed.');
 
-// Task 9: Direct channels moved to Footer
+// Task 9: Direct channels integrated beside Contact Form (Enhancements #4 & #5)
 const footerContent = fs.readFileSync(path.join(process.cwd(), 'src', 'components', 'Footer.tsx'), 'utf-8');
 assert(
-  footerContent.includes('contactChannels') &&
-  footerContent.includes('whatsapp') &&
-  footerContent.includes('telegram') &&
-  footerContent.includes('linkedin') &&
-  footerContent.includes('instagram') &&
-  footerContent.includes('gmail') &&
-  footerContent.includes('phone'),
-  'Footer.tsx must contain direct channels dock'
+  !footerContent.includes('contactChannels'),
+  'Footer.tsx must NOT contain direct channels dock'
 );
 const contactContent = fs.readFileSync(path.join(process.cwd(), 'src', 'components', 'Contact.tsx'), 'utf-8');
 assert(
-  !contactContent.includes('contactChannels'),
-  'Contact.tsx must NOT contain contactChannels dock'
+  contactContent.includes('contactChannels') &&
+  contactContent.includes('whatsapp') &&
+  contactContent.includes('telegram') &&
+  contactContent.includes('linkedin') &&
+  contactContent.includes('instagram') &&
+  contactContent.includes('gmail') &&
+  contactContent.includes('phone'),
+  'Contact.tsx must contain direct channels dock beside form'
 );
 assert(
-  footerContent.includes('+989177249281') &&
-  footerContent.includes('@mstf_abedi'),
-  'Footer.tsx channels must use direct callable numbers and valid handles'
+  contactContent.includes('+989177249281') &&
+  contactContent.includes('@mstf_abedi'),
+  'Contact.tsx channels must use direct callable numbers and valid handles'
 );
-console.log('✓ Task 9 (Channels moved to Footer) passed.');
+console.log('✓ Task 9 (Channels beside Contact Form) passed.');
 
-// Task 10: Redundant post-submit direct links removed from Contact
+// Task 10: Redundant post-submit duplicate draft links removed from Contact
 assert(
-  !contactContent.includes('https://mail.google.com/mail/?view=cm') &&
-  !contactContent.includes('https://t.me/mstf_abedi') &&
-  !contactContent.includes('https://wa.me/989177249281'),
-  'Contact.tsx must not contain redundant post-submission messenger links'
+  !contactContent.includes('ارسال مستقیم نسخه پیام در پیام‌رسان‌ها'),
+  'Contact.tsx must not contain redundant post-submission duplicate messenger dispatch links'
 );
 console.log('✓ Task 10 (Redundant post-submit links removed) passed.');
 

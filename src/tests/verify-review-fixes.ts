@@ -19,23 +19,25 @@ assert(
 );
 console.log('✓ Requirement 1 (Contact helper text removal) verified successfully.');
 
-// Test 2: Verify Footer layout alignment and ordering
+// Test 2: Verify Footer layout alignment and streamlined content (Enhancement #5)
 const footerPath = path.join(process.cwd(), 'src', 'components', 'Footer.tsx');
 const footerContent = fs.readFileSync(footerPath, 'utf-8');
 
 assert(
-  footerContent.includes('sm:flex-row items-center justify-between'),
-  'Footer.tsx must place bottom elements in a single horizontal row on sm+ screens'
+  footerContent.includes('طراحی و توسعه توسط') && footerContent.includes('مصطفی عابدی'),
+  'Footer.tsx must contain "طراحی و توسعه توسط مصطفی عابدی"'
 );
-const devIndex = footerContent.indexOf('طراحی و توسعه توسط مصطفی عابدی');
-const copyIndex = footerContent.indexOf('© 2026 مصطفی عابدی. تمامی حقوق محفوظ است.');
 assert(
-  devIndex !== -1 && copyIndex !== -1 && devIndex < copyIndex,
-  '"طراحی و توسعه" must appear before copyright in flex order so it sits at the start (RIGHT in RTL)'
+  !footerContent.includes('© 2026') && !footerContent.includes('تمامی حقوق محفوظ است'),
+  'Footer.tsx must NOT contain copyright notice per enhancement #5'
 );
-console.log('✓ Requirement 2 (Footer right alignment and horizontal alignment) verified successfully.');
+assert(
+  !footerContent.includes('contactChannels'),
+  'Footer.tsx must NOT contain direct channels dock'
+);
+console.log('✓ Requirement 2 (Footer streamlined & centered text) verified successfully.');
 
-// Test 3: Verify Contact form payload and fallback messenger links
+// Test 3: Verify Contact form payload and direct messenger links
 const routePath = path.join(process.cwd(), 'src', 'app', 'api', 'contact', 'route.ts');
 const routeContent = fs.readFileSync(routePath, 'utf-8');
 
@@ -44,10 +46,10 @@ assert(
   'route.ts must format full contact details into message body'
 );
 assert(
-  footerContent.includes('https://mail.google.com/mail/?view=cm') &&
-  footerContent.includes('https://t.me/mstf_abedi') &&
-  footerContent.includes('https://wa.me/989177249281'),
-  'Footer.tsx must provide 1-click Gmail, Telegram, and WhatsApp direct links'
+  contactContent.includes('https://mail.google.com/mail/?view=cm') &&
+  contactContent.includes('https://t.me/mstf_abedi') &&
+  contactContent.includes('https://wa.me/989177249281'),
+  'Contact.tsx must provide 1-click Gmail, Telegram, and WhatsApp direct links'
 );
 assert(
   !contactContent.includes('کپی متن پیام') &&
@@ -58,7 +60,7 @@ assert(
   contactContent.includes('اطلاعیه راه‌اندازی (مخصوص مدیر پورتفولیو):'),
   'Contact.tsx must clearly designate one-time FormSubmit activation notice as an admin notice'
 );
-console.log('✓ Requirement 3 (Contact form payload & Footer direct channels) verified successfully.');
+console.log('✓ Requirement 3 (Contact form payload & Contact direct channels) verified successfully.');
 
 // Test 4: Verify Standalone Hero Avatar position without conflicting classes
 const heroPath = path.join(process.cwd(), 'src', 'components', 'Hero.tsx');

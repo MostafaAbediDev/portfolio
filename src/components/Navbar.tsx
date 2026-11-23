@@ -202,7 +202,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Dropdown Menu Drawer (Sibling to Header for clean z-index & WebKit fixed support) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed top-16 sm:top-[72px] inset-x-0 w-full max-h-[calc(100dvh-4rem)] sm:max-h-[calc(100dvh-4.5rem)] overflow-y-auto bg-white dark:bg-[#070b13] border-b border-slate-200 dark:border-slate-800 shadow-2xl p-4 sm:p-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200 pb-8">
+        <div className="lg:hidden fixed top-16 sm:top-[72px] inset-x-0 w-full max-h-[calc(100dvh-4rem)] sm:max-h-[calc(100dvh-4.5rem)] overflow-y-auto bg-white dark:bg-[#070b13] border-b border-slate-200 dark:border-slate-800 shadow-2xl p-4 sm:p-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200 pb-5">
           <div className="max-w-md mx-auto flex flex-col gap-1.5">
             {navItems.map((item) => (
               <a
@@ -221,27 +221,6 @@ export const Navbar: React.FC = () => {
                 {item.label[lang]}
               </a>
             ))}
-            <div className="pt-3 mt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-              <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                {lang === 'fa' ? 'تنظیمات زبان و پوسته' : 'Language & Display Mode'}
-              </span>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={toggleLang}
-                  className="min-h-[44px] px-3.5 py-2 text-xs rounded-xl font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 active:scale-95"
-                >
-                  <Globe className="w-3.5 h-3.5" />
-                  <span>{lang === 'fa' ? 'English' : 'فارسی'}</span>
-                </button>
-                <button
-                  onClick={toggleTheme}
-                  className="min-h-[44px] min-w-[44px] p-2 text-xs rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 flex items-center justify-center active:scale-95"
-                  aria-label="Toggle theme in mobile menu"
-                >
-                  {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       )}

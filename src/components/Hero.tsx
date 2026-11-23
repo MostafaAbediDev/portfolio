@@ -18,6 +18,27 @@ import {
   MapPin,
 } from 'lucide-react';
 
+const getSocialBrandHoverClasses = (platform: string): string => {
+  switch (platform) {
+    case 'telegram':
+      return 'hover:bg-[#229ED9] hover:border-[#229ED9] hover:shadow-[0_0_18px_rgba(34,158,217,0.55)] hover:text-white';
+    case 'instagram':
+      return 'hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:border-rose-500 hover:shadow-[0_0_18px_rgba(225,48,108,0.55)] hover:text-white';
+    case 'linkedin':
+      return 'hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:shadow-[0_0_18px_rgba(10,102,194,0.55)] hover:text-white';
+    case 'whatsapp':
+      return 'hover:bg-[#25D366] hover:border-[#25D366] hover:shadow-[0_0_18px_rgba(37,211,102,0.55)] hover:text-white';
+    case 'email':
+    case 'gmail':
+      return 'hover:bg-[#EA4335] hover:border-[#EA4335] hover:shadow-[0_0_18px_rgba(234,67,53,0.55)] hover:text-white';
+    case 'phone':
+    case 'sms':
+      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white';
+    default:
+      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white';
+  }
+};
+
 export const Hero: React.FC = () => {
   const { lang, t, dir } = usePortfolio();
   const [headlineIndex, setHeadlineIndex] = useState(0);
@@ -170,7 +191,9 @@ export const Hero: React.FC = () => {
                       href={social.url}
                       target={social.url.startsWith('http') ? '_blank' : undefined}
                       rel={social.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="group relative min-h-[44px] min-w-[44px] flex items-center justify-center p-2.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 text-slate-600 dark:text-slate-300 shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:border-emerald-500/60 hover:bg-gradient-to-tr hover:from-emerald-500 hover:to-teal-500 hover:text-white hover:shadow-[0_0_20px_rgba(16,185,129,0.35)] active:scale-95"
+                      className={`group relative min-h-[44px] min-w-[44px] flex items-center justify-center p-2.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 text-slate-600 dark:text-slate-300 shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:-translate-y-1 active:scale-95 ${getSocialBrandHoverClasses(
+                        social.platform
+                      )}`}
                       aria-label={social.label}
                       title={social.label}
                     >
