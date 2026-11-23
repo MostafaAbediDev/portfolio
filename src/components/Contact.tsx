@@ -18,7 +18,6 @@ import {
   Linkedin,
   Instagram,
   Phone,
-  Copy,
   ExternalLink,
   Clock,
   MapPin,
@@ -61,16 +60,6 @@ export const Contact: React.FC = () => {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isPendingActivation, setIsPendingActivation] = useState(false);
   const [submittedAt, setSubmittedAt] = useState<string>('');
-  const [copiedId, setCopiedId] = useState<string | null>(null);
-  const copyTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
-
-  React.useEffect(() => {
-    return () => {
-      if (copyTimeoutRef.current) {
-        clearTimeout(copyTimeoutRef.current);
-      }
-    };
-  }, []);
 
   const contactChannels: ChannelItem[] = [
     {
@@ -152,41 +141,6 @@ export const Contact: React.FC = () => {
       hoverGlow: 'hover:border-emerald-500/50 dark:hover:border-emerald-500/50 hover:shadow-[0_0_16px_rgba(16,185,129,0.2)]',
     },
   ];
-
-  const handleCopy = async (text: string, id: string) => {
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.left = '-999999px';
-        textarea.style.top = '-999999px';
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
-        document.execCommand('copy');
-        textarea.remove();
-      }
-      setCopiedId(id);
-      if (copyTimeoutRef.current) {
-        clearTimeout(copyTimeoutRef.current);
-      }
-      copyTimeoutRef.current = setTimeout(() => {
-        setCopiedId(null);
-      }, 2500);
-    } catch (err) {
-      console.warn('Clipboard copy fallback:', err);
-      setCopiedId(id);
-      if (copyTimeoutRef.current) {
-        clearTimeout(copyTimeoutRef.current);
-      }
-      copyTimeoutRef.current = setTimeout(() => {
-        setCopiedId(null);
-      }, 2500);
-    }
-  };
 
   const validate = (): boolean => {
     const errors: {
@@ -340,33 +294,23 @@ export const Contact: React.FC = () => {
         </motion.div>
 
         {/* 2-Column Responsive Layout: Form (7 cols) + Direct Channels (5 cols) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Column 1: Contact Form Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-7 glass-card rounded-3xl p-5 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-2xl relative overflow-hidden"
+            className="lg:col-span-7 glass-card rounded-3xl p-5 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-2xl relative overflow-hidden h-full flex flex-col justify-between"
           >
             {/* Ambient top highlight */}
             <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500" />
 
-            {/* Card Header & Title without in-app badge */}
-            <div className="flex items-center gap-3 mb-6 pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
-              <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/25 shrink-0">
-                <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 dark:text-white">
-                  {t.contactFormTitle[lang]}
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  {lang === 'fa'
-                    ? 'ارسال مستقیم و امن به mostafa.abedi554@gmail.com'
-                    : 'Direct and secure delivery to mostafa.abedi554@gmail.com'}
-                </p>
-              </div>
+            {/* Card Header & Centered Title */}
+            <div className="text-center mb-6 pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
+              <h3 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 dark:text-white">
+                {t.contactFormTitle[lang]}
+              </h3>
             </div>
 
             {/* Interactive Form or Success State */}
@@ -585,7 +529,7 @@ export const Contact: React.FC = () => {
                           ? 'متن کامل پیام، شرح پروژه، تکنولوژی‌های مورد نظر یا جزئیات پیشنهاد خود را اینجا بنویسید...'
                           : 'Describe your project specifications, required technology stack, or inquiry details here...'
                       }
-                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-100/90 dark:bg-slate-900/80 border text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all resize-y ${
+                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-100/90 dark:bg-slate-900/80 border text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all resize-none ${
                         formErrors.message
                           ? 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/30'
                           : 'border-slate-200 dark:border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
@@ -636,91 +580,55 @@ export const Contact: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="lg:col-span-5 glass-card rounded-3xl p-5 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-2xl relative overflow-hidden flex flex-col justify-between"
+            className="lg:col-span-5 glass-card rounded-3xl p-5 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-2xl relative overflow-hidden h-full flex flex-col justify-between"
           >
             {/* Top ambient highlight */}
             <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-500" />
 
             <div>
-              {/* Card Header */}
-              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
-                <div className="p-3 rounded-2xl bg-cyan-500/10 text-cyan-500 border border-cyan-500/25 shrink-0">
-                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-                <div>
-                  <h3 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 dark:text-white">
-                    {lang === 'fa' ? 'شبکه‌های ارتباط مستقیم' : 'Direct Channels'}
-                  </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                    {lang === 'fa'
-                      ? 'کلیک جهت گفتگوی مستقیم یا کپی آسان مشخصات'
-                      : 'Click to start chatting or copy handle'}
-                  </p>
-                </div>
+              {/* Card Header & Centered Title */}
+              <div className="text-center mb-6 pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
+                <h3 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 dark:text-white">
+                  {lang === 'fa' ? 'شبکه‌های ارتباطی' : 'Communication Channels'}
+                </h3>
               </div>
 
-              {/* Channels List */}
+              {/* Channels List - Direct Navigation */}
               <div className="flex flex-col gap-3">
                 {contactChannels.map((channel) => {
                   const Icon = channel.icon;
-                  const isCopied = copiedId === channel.id;
 
                   return (
-                    <div
+                    <a
                       key={channel.id}
-                      className={`group flex items-center justify-between gap-3 p-3 sm:p-3.5 rounded-2xl bg-slate-100/80 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 transition-all duration-300 ${channel.hoverGlow}`}
+                      href={channel.link}
+                      target={channel.link.startsWith('http') ? '_blank' : undefined}
+                      rel={channel.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className={`group flex items-center justify-between gap-3 p-3 sm:p-3.5 rounded-2xl bg-slate-100/80 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] ${channel.hoverGlow}`}
+                      title={`${channel.name[lang]}: ${channel.identifier}`}
                     >
                       {/* Left: Icon & Channel Name/Identifier */}
-                      <a
-                        href={channel.link}
-                        target={channel.link.startsWith('http') ? '_blank' : undefined}
-                        rel={channel.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="flex items-center gap-3 min-w-0 flex-1 group/link"
-                        title={`${channel.name[lang]}: ${channel.identifier}`}
-                      >
+                      <div className="flex items-center gap-3 min-w-0 flex-1">
                         <div
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border transition-transform duration-300 group-hover:scale-105 ${channel.badgeBg} ${channel.badgeText} ${channel.badgeBorder}`}
+                          className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border transition-transform duration-300 group-hover:scale-110 ${channel.badgeBg} ${channel.badgeText} ${channel.badgeBorder}`}
                         >
                           <Icon className="w-5 h-5" />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover/link:text-emerald-500 dark:group-hover/link:text-emerald-400 transition-colors">
-                              {channel.name[lang]}
-                            </span>
-                            <ExternalLink className="w-3 h-3 text-slate-400 opacity-60 group-hover/link:opacity-100 group-hover/link:text-emerald-500 transition-all" />
-                          </div>
+                          <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
+                            {channel.name[lang]}
+                          </span>
                           <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-mono truncate" dir="ltr">
                             {channel.identifier}
                           </p>
                         </div>
-                      </a>
+                      </div>
 
-                      {/* Right: One-Click Copy Button */}
-                      <button
-                        type="button"
-                        onClick={() => handleCopy(channel.copyValue, channel.id)}
-                        className={`min-h-[36px] min-w-[36px] px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all duration-200 shrink-0 border ${
-                          isCopied
-                            ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/40 shadow-sm'
-                            : 'bg-white/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/70 hover:border-emerald-500/40 dark:hover:border-emerald-500/40 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15'
-                        }`}
-                        title={channel.copyLabel[lang]}
-                        aria-label={isCopied ? t.copied[lang] : channel.copyLabel[lang]}
-                      >
-                        {isCopied ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 text-emerald-500" />
-                            <span className="hidden sm:inline text-[11px]">{t.copied[lang]}</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3.5 h-3.5" />
-                            <span className="hidden sm:inline text-[11px]">{lang === 'fa' ? 'کپی' : 'Copy'}</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
+                      {/* Right: Direct Navigation Arrow Indicator */}
+                      <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-white/70 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/70 text-slate-400 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 group-hover:border-emerald-500/40 transition-all duration-200 shrink-0">
+                        <ExternalLink className="w-4 h-4 transition-transform duration-200 group-hover:scale-110" />
+                      </div>
+                    </a>
                   );
                 })}
               </div>

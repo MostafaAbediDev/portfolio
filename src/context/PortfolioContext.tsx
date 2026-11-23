@@ -17,6 +17,8 @@ interface PortfolioContextType {
   setSelectedProject: (project: ProjectItem | null) => void;
   dir: 'rtl' | 'ltr';
   t: UIStrings;
+  isSettingsOpen: boolean;
+  setIsSettingsOpen: (open: boolean) => void;
 }
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
@@ -26,6 +28,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('dark');
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // Load preferences from localStorage on mount
   useEffect(() => {
@@ -119,6 +122,8 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
         setSelectedProject,
         dir,
         t: uiStrings,
+        isSettingsOpen,
+        setIsSettingsOpen,
       }}
     >
       {children}

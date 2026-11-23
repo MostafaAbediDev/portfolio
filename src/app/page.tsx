@@ -14,6 +14,7 @@ import { Certificates } from '../components/Certificates';
 import { Contact } from '../components/Contact';
 import { Footer } from '../components/Footer';
 import { ProjectModal } from '../components/ProjectModal';
+import { MobileSettingsModal } from '../components/MobileSettingsModal';
 
 export default function HomePage() {
   return (
@@ -54,6 +55,9 @@ export default function HomePage() {
 
         {/* Footer */}
         <Footer />
+
+        {/* Mobile Settings Modal */}
+        <MobileSettingsModal />
 
         {/* Interactive Project Details Modal */}
         <ProjectModal />

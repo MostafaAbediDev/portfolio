@@ -21,21 +21,82 @@ import {
 const getSocialBrandHoverClasses = (platform: string): string => {
   switch (platform) {
     case 'telegram':
-      return 'hover:bg-[#229ED9] hover:border-[#229ED9] hover:shadow-[0_0_18px_rgba(34,158,217,0.55)] hover:text-white dark:hover:bg-[#229ED9] dark:hover:border-[#229ED9] dark:hover:text-white';
+      return 'hover:bg-[#229ED9] hover:border-[#229ED9] hover:shadow-[0_0_18px_rgba(34,158,217,0.55)] hover:text-white dark:hover:bg-[#229ED9] dark:hover:border-[#229ED9] dark:hover:text-white dark:hover:border-';
     case 'instagram':
-      return 'hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:border-rose-500 hover:shadow-[0_0_18px_rgba(225,48,108,0.55)] hover:text-white dark:hover:border-rose-500 dark:hover:text-white';
+      return 'hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:border-rose-500 hover:shadow-[0_0_18px_rgba(225,48,108,0.55)] hover:text-white dark:hover:border-rose-500 dark:hover:text-white dark:hover:border-';
     case 'linkedin':
-      return 'hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:shadow-[0_0_18px_rgba(10,102,194,0.55)] hover:text-white dark:hover:bg-[#0A66C2] dark:hover:border-[#0A66C2] dark:hover:text-white';
+      return 'hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:shadow-[0_0_18px_rgba(10,102,194,0.55)] hover:text-white dark:hover:bg-[#0A66C2] dark:hover:border-[#0A66C2] dark:hover:text-white dark:hover:border-';
     case 'whatsapp':
-      return 'hover:bg-[#25D366] hover:border-[#25D366] hover:shadow-[0_0_18px_rgba(37,211,102,0.55)] hover:text-white dark:hover:bg-[#25D366] dark:hover:border-[#25D366] dark:hover:text-white';
+      return 'hover:bg-[#25D366] hover:border-[#25D366] hover:shadow-[0_0_18px_rgba(37,211,102,0.55)] hover:text-white dark:hover:bg-[#25D366] dark:hover:border-[#25D366] dark:hover:text-white dark:hover:border-';
     case 'email':
     case 'gmail':
-      return 'hover:bg-[#EA4335] hover:border-[#EA4335] hover:shadow-[0_0_18px_rgba(234,67,53,0.55)] hover:text-white dark:hover:bg-[#EA4335] dark:hover:border-[#EA4335] dark:hover:text-white';
+      return 'hover:bg-[#EA4335] hover:border-[#EA4335] hover:shadow-[0_0_18px_rgba(234,67,53,0.55)] hover:text-white dark:hover:bg-[#EA4335] dark:hover:border-[#EA4335] dark:hover:text-white dark:hover:border-';
     case 'phone':
     case 'sms':
-      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-500 dark:hover:text-white';
     default:
-      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-500 dark:hover:text-white';
+      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-500 dark:hover:text-white dark:hover:border-';
+  }
+};
+
+const getSocialMeta = (platform: string, lang: 'fa' | 'en') => {
+  switch (platform) {
+    case 'whatsapp':
+      return {
+        name: lang === 'fa' ? 'واتس‌اپ' : 'WhatsApp',
+        icon: MessageCircle,
+        badgeBg: 'bg-[#25D366]/10 dark:bg-[#25D366]/15',
+        badgeText: 'text-[#25D366]',
+        badgeBorder: 'border-[#25D366]/30',
+        hoverGlow: 'hover:border-[#25D366]/50 dark:hover:border-[#25D366]/50 hover:shadow-[0_0_16px_rgba(37,211,102,0.25)]',
+      };
+    case 'telegram':
+      return {
+        name: lang === 'fa' ? 'تلگرام' : 'Telegram',
+        icon: Send,
+        badgeBg: 'bg-[#229ED9]/10 dark:bg-[#229ED9]/15',
+        badgeText: 'text-[#229ED9]',
+        badgeBorder: 'border-[#229ED9]/30',
+        hoverGlow: 'hover:border-[#229ED9]/50 dark:hover:border-[#229ED9]/50 hover:shadow-[0_0_16px_rgba(34,158,217,0.25)]',
+      };
+    case 'linkedin':
+      return {
+        name: lang === 'fa' ? 'لینکدین' : 'LinkedIn',
+        icon: Linkedin,
+        badgeBg: 'bg-[#0A66C2]/10 dark:bg-[#0A66C2]/15',
+        badgeText: 'text-[#0A66C2]',
+        badgeBorder: 'border-[#0A66C2]/30',
+        hoverGlow: 'hover:border-[#0A66C2]/50 dark:hover:border-[#0A66C2]/50 hover:shadow-[0_0_16px_rgba(10,102,194,0.25)]',
+      };
+    case 'instagram':
+      return {
+        name: lang === 'fa' ? 'اینستاگرام' : 'Instagram',
+        icon: Instagram,
+        badgeBg: 'bg-rose-500/10 dark:bg-rose-500/15',
+        badgeText: 'text-rose-500',
+        badgeBorder: 'border-rose-500/30',
+        hoverGlow: 'hover:border-rose-500/50 dark:hover:border-rose-500/50 hover:shadow-[0_0_16px_rgba(225,48,108,0.25)]',
+      };
+    case 'email':
+    case 'gmail':
+      return {
+        name: lang === 'fa' ? 'جیمیل' : 'Gmail',
+        icon: Mail,
+        badgeBg: 'bg-[#EA4335]/10 dark:bg-[#EA4335]/15',
+        badgeText: 'text-[#EA4335]',
+        badgeBorder: 'border-[#EA4335]/30',
+        hoverGlow: 'hover:border-[#EA4335]/50 dark:hover:border-[#EA4335]/50 hover:shadow-[0_0_16px_rgba(234,67,53,0.25)]',
+      };
+    case 'phone':
+    case 'sms':
+    default:
+      return {
+        name: lang === 'fa' ? 'پیامک و تماس' : 'SMS & Call',
+        icon: Phone,
+        badgeBg: 'bg-emerald-500/10 dark:bg-emerald-500/15',
+        badgeText: 'text-emerald-500 dark:text-emerald-400',
+        badgeBorder: 'border-emerald-500/30',
+        hoverGlow: 'hover:border-emerald-500/50 dark:hover:border-emerald-500/50 hover:shadow-[0_0_16px_rgba(16,185,129,0.25)]',
+      };
   }
 };
 
@@ -172,32 +233,33 @@ export const Hero: React.FC = () => {
               </a>
             </div>
 
-            {/* Quick Social & Contact Icons */}
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-4 border-t border-slate-200 dark:border-slate-800/80 w-full">
-              <span className="text-xs font-semibold text-slate-500 shrink-0">
-                {lang === 'fa' ? 'شبکه‌های ارتباطی:' : 'Connect:'}
+            {/* Quick Social & Contact Badges - Matching Contact Direct Channels Box Style */}
+            <div className="flex flex-col gap-3 pt-4 border-t border-slate-200 dark:border-slate-800/80 w-full">
+              <span className="text-xs font-semibold text-slate-500">
+                {lang === 'fa' ? 'شبکه‌های ارتباطی:' : 'Communication Channels:'}
               </span>
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
                 {personalInfo.socials.map((social) => {
-                  const IconComponent =
-                    social.platform === 'linkedin' ? Linkedin :
-                    social.platform === 'telegram' ? Send :
-                    social.platform === 'whatsapp' ? MessageCircle :
-                    social.platform === 'instagram' ? Instagram :
-                    social.platform === 'phone' || social.platform === 'sms' ? Phone : Mail;
+                  const meta = getSocialMeta(social.platform, lang);
+                  const IconComponent = meta.icon;
                   return (
                     <a
                       key={social.platform}
                       href={social.url}
                       target={social.url.startsWith('http') ? '_blank' : undefined}
                       rel={social.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className={`group relative min-h-[44px] min-w-[44px] flex items-center justify-center p-2.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 text-slate-600 dark:text-slate-300 shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:-translate-y-1 active:scale-95 ${getSocialBrandHoverClasses(
-                        social.platform
-                      )}`}
-                      aria-label={social.label}
-                      title={social.label}
+                      className={`group relative flex items-center gap-2 sm:gap-2.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-2xl bg-slate-100/80 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:scale-110 hover:-translate-y-0.5 active:scale-95 ${meta.hoverGlow}`}
+                      aria-label={meta.name}
+                      title={`${meta.name}: ${social.handle}`}
                     >
-                      <IconComponent className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                      <div
+                        className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center shrink-0 border transition-transform duration-300 group-hover:scale-110 ${meta.badgeBg} ${meta.badgeText} ${meta.badgeBorder}`}
+                      >
+                        <IconComponent className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      </div>
+                      <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
+                        {meta.name}
+                      </span>
                     </a>
                   );
                 })}
