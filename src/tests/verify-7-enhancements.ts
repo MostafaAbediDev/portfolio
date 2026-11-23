@@ -25,10 +25,19 @@ assert(
   'MobileSettingsModal must include "تأیید و ادامه" / "Confirm & Continue" button'
 );
 
+assert(
+  modalContent.includes('max-h-[calc(100dvh-2rem)]') && modalContent.includes('z-[100]'),
+  'MobileSettingsModal must support viewport height constraints and highest z-index priority'
+);
+
 const navbarContent = fs.readFileSync(path.join(process.cwd(), 'src', 'components', 'Navbar.tsx'), 'utf-8');
 assert(
   navbarContent.includes('setIsSettingsOpen(true)') && navbarContent.includes('Settings'),
   'Navbar.tsx must provide a Settings button on mobile to re-open settings modal'
+);
+assert(
+  navbarContent.includes('setMobileMenuOpen(false)'),
+  'Navbar.tsx Settings trigger must close the mobile menu drawer to prevent stacked state conflicts'
 );
 
 const pageContent = fs.readFileSync(path.join(process.cwd(), 'src', 'app', 'page.tsx'), 'utf-8');
@@ -57,6 +66,14 @@ assert(
   heroContent.includes('#25D366') &&
   heroContent.includes('#EA4335'),
   'Hero.tsx must maintain brand color definitions'
+);
+assert(
+  !heroContent.includes('hover:scale-105 hover:scale-110'),
+  'Hero.tsx must not contain duplicate conflicting hover scale classes'
+);
+assert(
+  !heroContent.includes('dark:hover:border- ') && !heroContent.includes("dark:hover:border-';"),
+  'Hero.tsx must not contain dangling broken dark:hover:border- classes'
 );
 console.log('✓ Task 2 (Hero Social Icons Match Contact Channels Style) verified.');
 

@@ -322,7 +322,7 @@ export const Contact: React.FC = () => {
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
-                  className="py-4 space-y-6"
+                  className="py-4 space-y-6 flex-1 flex flex-col justify-between"
                 >
                   <div className="p-5 sm:p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-900 dark:text-emerald-200 shadow-glow">
                     <div className="flex items-start gap-4">
@@ -400,8 +400,9 @@ export const Contact: React.FC = () => {
                 </motion.div>
               ) : (
                 /* Contact Form */
-                <form key="contact-form" onSubmit={handleSubmit} noValidate className="space-y-4">
-                  {/* Row 1: Name and Contact */}
+                <form key="contact-form" onSubmit={handleSubmit} noValidate className="space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-4">
+                    {/* Row 1: Name and Contact */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Name Field */}
                     <div>
@@ -548,8 +549,9 @@ export const Contact: React.FC = () => {
                       {submitError}
                     </div>
                   )}
+                </div>
 
-                  {/* Submit Action */}
+                {/* Submit Action */}
                   <div className="pt-2">
                     <button
                       type="submit"

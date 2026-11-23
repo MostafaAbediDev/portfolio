@@ -40,7 +40,7 @@ export const MobileSettingsModal: React.FC = () => {
   return (
     <AnimatePresence>
       {isSettingsOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -60,7 +60,7 @@ export const MobileSettingsModal: React.FC = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 16 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative w-full max-w-md bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-7 shadow-2xl overflow-hidden z-10"
+            className="relative w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-7 shadow-2xl z-10"
           >
             {/* Top ambient highlight line */}
             <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500" />
@@ -190,7 +190,9 @@ export const MobileSettingsModal: React.FC = () => {
                       </div>
                       <div>
                         <div className="text-xs font-bold truncate">فارسی</div>
-                        <div className="text-[10px] text-slate-400">پیش‌فرض</div>
+                        <div className="text-[10px] text-slate-400">
+                          {lang === 'fa' ? 'پیش‌فرض' : 'Default'}
+                        </div>
                       </div>
                     </div>
                     {lang === 'fa' && <Check className="w-4 h-4 text-emerald-500 shrink-0" />}
@@ -218,7 +220,9 @@ export const MobileSettingsModal: React.FC = () => {
                       </div>
                       <div>
                         <div className="text-xs font-bold truncate">English</div>
-                        <div className="text-[10px] text-slate-400">Global</div>
+                        <div className="text-[10px] text-slate-400">
+                          {lang === 'fa' ? 'بین‌المللی' : 'Global'}
+                        </div>
                       </div>
                     </div>
                     {lang === 'en' && <Check className="w-4 h-4 text-emerald-500 shrink-0" />}

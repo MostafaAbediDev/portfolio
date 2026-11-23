@@ -21,20 +21,20 @@ import {
 const getSocialBrandHoverClasses = (platform: string): string => {
   switch (platform) {
     case 'telegram':
-      return 'hover:bg-[#229ED9] hover:border-[#229ED9] hover:shadow-[0_0_18px_rgba(34,158,217,0.55)] hover:text-white dark:hover:bg-[#229ED9] dark:hover:border-[#229ED9] dark:hover:text-white dark:hover:border-';
+      return 'hover:bg-[#229ED9] hover:border-[#229ED9] hover:shadow-[0_0_18px_rgba(34,158,217,0.55)] hover:text-white dark:hover:bg-[#229ED9] dark:hover:border-[#229ED9] dark:hover:text-white dark:hover:border-[#229ED9]';
     case 'instagram':
-      return 'hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:border-rose-500 hover:shadow-[0_0_18px_rgba(225,48,108,0.55)] hover:text-white dark:hover:border-rose-500 dark:hover:text-white dark:hover:border-';
+      return 'hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:border-rose-500 hover:shadow-[0_0_18px_rgba(225,48,108,0.55)] hover:text-white dark:hover:border-rose-500 dark:hover:text-white dark:hover:border-rose-500';
     case 'linkedin':
-      return 'hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:shadow-[0_0_18px_rgba(10,102,194,0.55)] hover:text-white dark:hover:bg-[#0A66C2] dark:hover:border-[#0A66C2] dark:hover:text-white dark:hover:border-';
+      return 'hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:shadow-[0_0_18px_rgba(10,102,194,0.55)] hover:text-white dark:hover:bg-[#0A66C2] dark:hover:border-[#0A66C2] dark:hover:text-white dark:hover:border-[#0A66C2]';
     case 'whatsapp':
-      return 'hover:bg-[#25D366] hover:border-[#25D366] hover:shadow-[0_0_18px_rgba(37,211,102,0.55)] hover:text-white dark:hover:bg-[#25D366] dark:hover:border-[#25D366] dark:hover:text-white dark:hover:border-';
+      return 'hover:bg-[#25D366] hover:border-[#25D366] hover:shadow-[0_0_18px_rgba(37,211,102,0.55)] hover:text-white dark:hover:bg-[#25D366] dark:hover:border-[#25D366] dark:hover:text-white dark:hover:border-[#25D366]';
     case 'email':
     case 'gmail':
-      return 'hover:bg-[#EA4335] hover:border-[#EA4335] hover:shadow-[0_0_18px_rgba(234,67,53,0.55)] hover:text-white dark:hover:bg-[#EA4335] dark:hover:border-[#EA4335] dark:hover:text-white dark:hover:border-';
+      return 'hover:bg-[#EA4335] hover:border-[#EA4335] hover:shadow-[0_0_18px_rgba(234,67,53,0.55)] hover:text-white dark:hover:bg-[#EA4335] dark:hover:border-[#EA4335] dark:hover:text-white dark:hover:border-[#EA4335]';
     case 'phone':
     case 'sms':
     default:
-      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-500 dark:hover:text-white dark:hover:border-';
+      return 'hover:bg-emerald-600 hover:border-emerald-500 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] hover:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-500 dark:hover:text-white dark:hover:border-emerald-500';
   }
 };
 
@@ -248,7 +248,7 @@ export const Hero: React.FC = () => {
                       href={social.url}
                       target={social.url.startsWith('http') ? '_blank' : undefined}
                       rel={social.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className={`group relative flex items-center gap-2 sm:gap-2.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-2xl bg-slate-100/80 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:scale-110 hover:-translate-y-0.5 active:scale-95 ${meta.hoverGlow}`}
+                      className={`group relative flex items-center gap-2 sm:gap-2.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-2xl bg-slate-100/80 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 active:scale-95 ${meta.hoverGlow}`}
                       aria-label={meta.name}
                       title={`${meta.name}: ${social.handle}`}
                     >

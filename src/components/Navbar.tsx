@@ -190,7 +190,10 @@ export const Navbar: React.FC = () => {
 
             {/* Mobile Settings Modal Trigger */}
             <button
-              onClick={() => setIsSettingsOpen(true)}
+              onClick={() => {
+                setIsSettingsOpen(true);
+                setMobileMenuOpen(false);
+              }}
               className="lg:hidden min-h-[40px] min-w-[40px] sm:min-h-[42px] sm:min-w-[42px] p-2 rounded-full text-slate-700 dark:text-slate-200 border border-slate-300/80 dark:border-slate-700/80 hover:border-emerald-500/50 bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm transition-all hover:scale-105 active:scale-95 shadow-sm flex items-center justify-center shrink-0"
               title={lang === 'fa' ? 'تنظیمات سایت' : 'Site Settings'}
               aria-label={lang === 'fa' ? 'تنظیمات سایت' : 'Site Settings'}
