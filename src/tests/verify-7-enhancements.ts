@@ -32,12 +32,8 @@ assert(
 
 const navbarContent = fs.readFileSync(path.join(process.cwd(), 'src', 'components', 'Navbar.tsx'), 'utf-8');
 assert(
-  navbarContent.includes('setIsSettingsOpen(true)') && navbarContent.includes('Settings'),
-  'Navbar.tsx must provide a Settings button on mobile to re-open settings modal'
-);
-assert(
-  navbarContent.includes('setMobileMenuOpen(false)'),
-  'Navbar.tsx Settings trigger must close the mobile menu drawer to prevent stacked state conflicts'
+  !navbarContent.includes('setIsSettingsOpen(true)') && !navbarContent.includes('<Settings'),
+  'Navbar.tsx must NOT provide a redundant Settings button in header on mobile'
 );
 
 const pageContent = fs.readFileSync(path.join(process.cwd(), 'src', 'app', 'page.tsx'), 'utf-8');

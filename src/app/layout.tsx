@@ -4,15 +4,15 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'مصطفی عابدی | برنامه‌نویس BackEnd و فول‌استک (.NET) | Mostafa Abedi',
   description:
-    'وب‌سایت شخصی و پورتفولیو مهندسی مصطفی عابدی - متخصص توسعه نرم‌افزار با ASP.NET Core، معماری پیازی (Onion Architecture)، پایگاه داده و سیستم‌های یکپارچه وب و ویندوز.',
+    'وب‌سایت شخصی و پورتفولیو مهندسی مصطفی عابدی - متخصص توسعه نرم‌افزار با ASP.NET Core، معماری‌های مدرن و لایه‌ای نرم‌افزار، پایگاه داده و سیستم‌های یکپارچه سازمانی.',
   keywords: [
     'Mostafa Abedi',
     'مصطفی عابدی',
     'برنامه‌نویس BackEnd',
     'ASP.NET Core',
     'C#',
-    'Onion Architecture',
     'Clean Architecture',
+    'Layered Architecture',
     'SQL Server',
     'Portfolio',
     'توسعه دهنده وب شیراز',

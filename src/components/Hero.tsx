@@ -12,7 +12,6 @@ import {
   Instagram,
   Phone,
   MessageCircle,
-  Sparkles,
   Award,
   GraduationCap,
   MapPin,
@@ -155,12 +154,6 @@ export const Hero: React.FC = () => {
               dir === 'rtl' ? 'lg:order-2' : 'lg:order-1'
             }`}
           >
-            {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 shadow-glow backdrop-blur-sm">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
-              <span>{personalInfo.title[lang]}</span>
-            </div>
-
             {/* Name Heading */}
             <div className="flex flex-col gap-2">
               <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-tight break-words">

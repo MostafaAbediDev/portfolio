@@ -19,21 +19,19 @@ export const personalInfo: PersonalInfo = {
   },
   headlines: {
     fa: [
-      'متخصص معماری پیازی (Onion Architecture) و کدهای تمیز',
       'توسعه‌دهنده تخصصی ASP.NET Core و RESTful API',
       'تحلیلگر و طراح سیستم‌های پایگاه داده و نرم‌افزارهای یکپارچه',
       'طراح راهکارهای مقیاس‌پذیر سازمانی، مالی و وب‌سایت‌های مدرن',
     ],
     en: [
-      'Specialist in Onion Architecture & Clean Code Principles',
       'ASP.NET Core & Scalable RESTful API Architect',
       'Database Designer & Enterprise Systems Developer',
       'Building High-Performance Web & Desktop Solutions',
     ],
   },
   bio: {
-    fa: 'توسعه‌دهنده‌ی BackEnd با بیش از ۱ سال تجربه‌ی عملی در طراحی و توسعه‌ی نرم‌افزارهای تحت وب و ویندوز با استفاده از فناوری‌های مبتنی بر .NET. دارای تجربه در توسعه‌ی برنامه‌ها با ASP.NET Core، پیاده‌سازی معماری پیازی (Onion Architecture)، پیاده‌سازی APIهای RESTful و طراحی ساختارهای نرم‌افزاری منظم، قابل توسعه و مقیاس‌پذیر. متعهد به اصول طراحی نرم‌افزار، بهبود کیفیت کد و علاقه‌مند به هوش مصنوعی و یادگیری فناوری‌های نوین.',
-    en: 'Backend & Full-Stack Developer with practical experience in designing and developing web and desktop applications using .NET technologies. Experienced in ASP.NET Core, Onion Architecture, RESTful APIs, and scalable software systems. Passionate about clean architecture, code quality, AI, and continuous learning.',
+    fa: 'توسعه‌دهنده‌ی BackEnd با بیش از ۲ سال تجربه‌ی عملی و تخصصی در طراحی و توسعه‌ی نرم‌افزارهای تحت وب و ویندوز با استفاده از فناوری‌های مبتنی بر .NET. دارای تجربه در توسعه‌ی برنامه‌ها با ASP.NET Core، پیاده‌سازی معماری‌های مدرن و لایه‌ای، پیاده‌سازی APIهای RESTful و طراحی ساختارهای نرم‌افزاری منظم، قابل توسعه و مقیاس‌پذیر. متعهد به اصول مهندسی نرم‌افزار، بهبود کیفیت کد و علاقه‌مند به هوش مصنوعی و یادگیری فناوری‌های نوین.',
+    en: 'Backend & Full-Stack Developer with over 2 years of professional production experience in designing and developing web and desktop applications using .NET technologies. Experienced in ASP.NET Core, Modern Layered Architectures, RESTful APIs, and scalable software systems. Passionate about clean architecture, code quality, AI, and continuous learning.',
   },
   summary: {
     fa: 'توسعه‌دهنده متعهد، علاقه‌مند به حل چالش‌های پیچیده نرم‌افزاری، طراحی دیتابیس‌های بهینه و پیاده‌سازی سرویس‌های با کارایی بالا.',
@@ -102,8 +100,8 @@ export const personalInfo: PersonalInfo = {
   stats: [
     {
       id: 'exp',
-      value: '+1',
-      label: { fa: 'سال سابقه کاری حرفه‌ای', en: 'Years of Experience' },
+      value: '+2',
+      label: { fa: '۲+ سال سابقه کاری تخصصی', en: '2+ Years Production Experience' },
       detail: { fa: 'در شرکت‌های فعال فناوری شیراز', en: 'In tech firms in Shiraz' },
     },
     {
@@ -111,12 +109,6 @@ export const personalInfo: PersonalInfo = {
       value: '5+',
       label: { fa: 'پروژه بزرگ اجرایی و موفق', en: 'Completed Production Projects' },
       detail: { fa: 'سامانه‌های وب، حسابداری و سازمانی', en: 'Web, accounting & enterprise' },
-    },
-    {
-      id: 'db',
-      value: '100%',
-      label: { fa: 'تخصص در تحلیل و طراحی دیتابیس', en: 'Database Design Mastery' },
-      detail: { fa: 'طراحی ساختار رابطه‌ای و کوئری‌های پیشرفته', en: 'Relational models & optimization' },
     },
     {
       id: 'paper',
@@ -139,7 +131,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'C# Programming', level: 90, icon: 'Code2', category: 'backend', highlight: true },
       { name: 'ASP.NET Core', level: 95, icon: 'Cpu', category: 'backend', highlight: true },
       { name: 'RESTful Web APIs', level: 95, icon: 'Server', category: 'backend', highlight: true },
-      { name: 'Onion Architecture', level: 95, icon: 'Layers', category: 'backend', highlight: true },
+      { name: 'Modern Layered Architecture', level: 95, icon: 'Layers', category: 'backend', highlight: true },
       { name: 'Clean Architecture Principles', level: 90, icon: 'Boxes', category: 'backend', highlight: true },
       { name: 'Entity Framework Core & LINQ', level: 90, icon: 'Workflow', category: 'backend', highlight: true },
     ],
@@ -152,7 +144,7 @@ export const skillCategories: SkillCategory[] = [
       en: 'Complex database modeling and data processing optimization',
     },
     skills: [
-      { name: 'Database Analysis & Design', level: 100, icon: 'Database', category: 'database', highlight: true },
+      { name: 'Database Analysis & Design', level: 95, icon: 'Database', category: 'database', highlight: true },
       { name: 'Microsoft SQL Server (T-SQL)', level: 80, icon: 'HardDrive', category: 'database', highlight: true },
       { name: 'Entity Framework Core', level: 85, icon: 'Workflow', category: 'database' },
       { name: 'Data Normalization & Indexing', level: 90, icon: 'Sparkles', category: 'database' },
@@ -182,7 +174,7 @@ export const skillCategories: SkillCategory[] = [
       en: 'Enterprise ERP, accounting software, e-commerce, and agile workflows',
     },
     skills: [
-      { name: 'E-Commerce Website Architecture', level: 100, icon: 'ShoppingCart', category: 'solutions', highlight: true },
+      { name: 'E-Commerce Website Architecture', level: 95, icon: 'ShoppingCart', category: 'solutions', highlight: true },
       { name: 'Accounting & ERP/CRM Systems', level: 80, icon: 'FileSpreadsheet', category: 'solutions', highlight: true },
       { name: 'Desktop Software (.NET / WinForms)', level: 80, icon: 'Monitor', category: 'solutions' },
       { name: 'Agile & Scrum Methodologies', level: 60, icon: 'Users', category: 'solutions' },
@@ -217,8 +209,8 @@ export const experiences: ExperienceItem[] = [
       en: 'Full-time / Production',
     },
     description: {
-      fa: 'مشارکت در طراحی، معماری و پیاده‌سازی نرم‌افزارهای جامع وب و ویندوز سازمانی با تمرکز بر بک‌اند ASP.NET Core و الگوهای مدرن معماری پیازی.',
-      en: 'Architecting and developing full-stack web and desktop enterprise software with emphasis on ASP.NET Core and Onion Architecture.',
+      fa: 'مشارکت در طراحی، معماری و پیاده‌سازی نرم‌افزارهای جامع وب و ویندوز سازمانی با تمرکز بر بک‌اند ASP.NET Core و الگوهای مدرن معماری‌های چندلایه‌ای.',
+      en: 'Architecting and developing full-stack web and desktop enterprise software with emphasis on ASP.NET Core and Modern Layered Architectures.',
     },
     achievements: {
       fa: [
@@ -236,7 +228,7 @@ export const experiences: ExperienceItem[] = [
         'Formulated backlogs, managed sprint tasks, and collaborated within agile Scrum sprints',
       ],
     },
-    technologies: ['C#', 'ASP.NET Core', 'Microsoft SQL Server', 'Onion Architecture', 'RESTful APIs', 'JavaScript', 'Tailwind CSS', 'Scrum'],
+    technologies: ['C#', 'ASP.NET Core', 'Microsoft SQL Server', 'Layered Architecture', 'RESTful APIs', 'JavaScript', 'Tailwind CSS', 'Scrum'],
   },
   {
     id: 'ara-pendar-dev',
@@ -341,26 +333,26 @@ export const projects: ProjectItem[] = [
       en: 'A high-traffic web ordering platform featuring an interactive custom pizza builder (whole & half slices) and a robust admin dashboard.',
     },
     fullDesc: {
-      fa: 'این سامانه به سفارش مجموعه رستوران‌های شب‌نشین جهرم طراحی و توسعه یافته است. از ویژگی‌های شاخص آن می‌توان به پیتزاساز آنلاین با قابلیت انتخاب نان، پنیر، سس و تاپینگ‌های متنوع به صورت اسلایس یا کامل، محاسبه آنی قیمت، ثبت سفارش و داشبورد مدیریتی پیشرفته برای پرسنل آشپزخانه و صندوق اشاره کرد. بک‌اند با معماری پیازی پیاده‌سازی شده که توسعه‌پذیری و پایداری بالایی به سیستم بخشیده است.',
-      en: 'Architected and developed for Shab Neshin Restaurants. Key highlights include an intuitive custom pizza builder enabling users to customize bases, sauces, and toppings per half or whole pie with real-time pricing calculation, coupled with a comprehensive real-time admin portal for kitchen and billing operations built atop Onion Architecture.',
+      fa: 'این سامانه به سفارش مجموعه رستوران‌های شب‌نشین جهرم طراحی و توسعه یافته است. از ویژگی‌های شاخص آن می‌توان به پیتزاساز آنلاین با قابلیت انتخاب نان، پنیر، سس و تاپینگ‌های متنوع به صورت اسلایس یا کامل، محاسبه آنی قیمت، ثبت سفارش و داشبورد مدیریتی پیشرفته برای پرسنل آشپزخانه و صندوق اشاره کرد. بک‌اند با معماری‌های مدرن و لایه‌ای پیاده‌سازی شده که توسعه‌پذیری و پایداری بالایی به سیستم بخشیده است.',
+      en: 'Architected and developed for Shab Neshin Restaurants. Key highlights include an intuitive custom pizza builder enabling users to customize bases, sauces, and toppings per half or whole pie with real-time pricing calculation, coupled with a comprehensive real-time admin portal for kitchen and billing operations built atop Modern Layered Architectures.',
     },
     keyFeatures: {
       fa: [
         'ماژول تعاملی پیتزاساز اختصاصی با قابلیت سفارشی‌سازی نیمه به نیمه',
         'محاسبه لحظه‌ای قیمت، مالیات و تخفیف‌ها بر اساس مواد انتخابی',
         'داشبورد جامع مدیریت سفارشات، منو، قیمت‌گذاری و وضعیت ارسال',
-        'پیاده‌سازی بک‌اند با معماری پیازی و الگوی مخزن (Repository Pattern)',
-        'واکنش‌گرایی ۱۰۰٪ در تمامی دستگاه‌ها و موبایل‌ها',
+        'پیاده‌سازی بک‌اند با معماری مدرن لایه‌ای و الگوی مخزن (Repository Pattern)',
+        'واکنش‌گرایی کامل در تمامی دستگاه‌ها و موبایل‌ها',
       ],
       en: [
         'Interactive custom pizza creator with split-topping (half/whole) support',
         'Instant dynamic price, tax, and promotional discount recalculation',
         'Comprehensive admin panel for order tracking, menu catalog, and status workflows',
-        'Clean Onion Architecture backend with Repository & Unit of Work patterns',
+        'Modern Layered Architecture backend with Repository & Unit of Work patterns',
         'Fully responsive mobile-optimized customer ordering experience',
       ],
     },
-    techStack: ['ASP.NET Core', 'C#', 'SQL Server', 'Onion Architecture', 'RESTful APIs', 'JavaScript', 'Tailwind CSS'],
+    techStack: ['ASP.NET Core', 'C#', 'SQL Server', 'Layered Architecture', 'RESTful APIs', 'JavaScript', 'Tailwind CSS'],
     liveUrl: 'https://pizzasaz.noiatechdevdesk.ir',
     featured: true,
     gradient: 'from-amber-500/20 via-orange-500/10 to-transparent',
@@ -404,7 +396,7 @@ export const projects: ProjectItem[] = [
         'Consolidated financial reporting exports for accounting and auditing departments',
       ],
     },
-    techStack: ['ASP.NET Core', 'C#', 'Microsoft SQL Server', 'Onion Architecture', 'REST APIs', 'HTML5/CSS3'],
+    techStack: ['ASP.NET Core', 'C#', 'Microsoft SQL Server', 'Layered Architecture', 'REST APIs', 'HTML5/CSS3'],
     liveUrl: 'https://digitalmenu.noiatech.ir',
     featured: true,
     gradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
@@ -460,12 +452,12 @@ export const projects: ProjectItem[] = [
       en: 'Online E-Commerce & Catalog System',
     },
     shortDesc: {
-      fa: 'وب‌سایت فروشگاهی کامل با سیستم انبارداری بلادرنگ، کاتالوگ محصولات سفارشی (کابینت و دکوراسیون) و معماری پیازی.',
-      en: 'Full-featured e-commerce platform with dynamic inventory, bespoke cabinet catalog configuration, and Onion Architecture.',
+      fa: 'وب‌سایت فروشگاهی کامل با سیستم انبارداری بلادرنگ، کاتالوگ محصولات سفارشی (کابینت و دکوراسیون) و معماری مدرن لایه‌ای.',
+      en: 'Full-featured e-commerce platform with dynamic inventory, bespoke cabinet catalog configuration, and Modern Layered Architecture.',
     },
     fullDesc: {
       fa: 'پروژه‌ای کامل شامل تحلیل عمیق پایگاه داده برای ساختار ویژگی‌های متغیر محصول (رنگ، جنس، ابعاد)، سبد خرید داینامیک، درگاه پرداخت اینترنتی، پیگیری سفارشات و مدیریت سطوح دسترسی مدیران. زیرساخت بک‌اند به گونه‌ای طراحی شده که با بارهای ترافیکی بالا به راحتی تطبیق پیدا کند.',
-      en: 'A scalable e-commerce solution featuring complex database modeling for variable product attributes (materials, dimensions, finishes), dynamic shopping cart, gateway integration, and back-office order tracking backed by Onion Architecture.',
+      en: 'A scalable e-commerce solution featuring complex database modeling for variable product attributes (materials, dimensions, finishes), dynamic shopping cart, gateway integration, and back-office order tracking backed by Modern Layered Architectures.',
     },
     keyFeatures: {
       fa: [
@@ -483,7 +475,7 @@ export const projects: ProjectItem[] = [
         'Optimized technical SEO and swift response times',
       ],
     },
-    techStack: ['ASP.NET Core', 'C#', 'Microsoft SQL Server', 'Onion Architecture', 'REST APIs', 'Tailwind CSS'],
+    techStack: ['ASP.NET Core', 'C#', 'Microsoft SQL Server', 'Layered Architecture', 'REST APIs', 'Tailwind CSS'],
     featured: false,
     gradient: 'from-violet-500/20 via-purple-500/10 to-transparent',
   },
@@ -499,12 +491,12 @@ export const projects: ProjectItem[] = [
       en: 'Content Management & Personal Portal',
     },
     shortDesc: {
-      fa: 'وب‌سایت نمونه‌کار دو زبانه و ماژولار با پنل اختصاصی مدیریت محتوا، مدیریت پروژه‌ها و مهارت‌ها با معماری پیازی.',
-      en: 'Modular bilingual portfolio website equipped with a bespoke headless content management panel built on Onion Architecture.',
+      fa: 'وب‌سایت نمونه‌کار دو زبانه و ماژولار با پنل اختصاصی مدیریت محتوا، مدیریت پروژه‌ها و مهارت‌ها با معماری مدرن لایه‌ای.',
+      en: 'Modular bilingual portfolio website equipped with a bespoke headless content management panel built on Modern Layered Architecture.',
     },
     fullDesc: {
       fa: 'یک پلتفرم کامل نمونه‌کار که به مدیر اجازه می‌دهد بدون نیاز به تغییر در کد، پروژه‌ها، مقالات، مهارت‌ها و پیام‌های دریافتی را مدیریت کند. دارای معماری پاک، تفکیک کامل لایه‌ها و سازگاری کامل با دستگاه‌های مختلف.',
-      en: 'A high-performance portfolio CMS enabling content updates for projects, publications, skills, and received inquiries without touching codebase, leveraging Onion Architecture.',
+      en: 'A high-performance portfolio CMS enabling content updates for projects, publications, skills, and received inquiries without touching codebase, leveraging Modern Layered Architectures.',
     },
     keyFeatures: {
       fa: [
@@ -518,7 +510,7 @@ export const projects: ProjectItem[] = [
         'Maximized Core Web Vitals performance and accessibility scores',
       ],
     },
-    techStack: ['ASP.NET Core', 'C#', 'SQL Server', 'Onion Architecture', 'TypeScript', 'Tailwind CSS'],
+    techStack: ['ASP.NET Core', 'C#', 'SQL Server', 'Layered Architecture', 'TypeScript', 'Tailwind CSS'],
     featured: false,
     gradient: 'from-cyan-500/20 via-teal-500/10 to-transparent',
   },

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:data": "node --experimental-strip-types src/tests/verify-data.ts && node --experimental-strip-types src/tests/verify-contact-and-nav.ts && node --experimental-strip-types src/tests/verify-review-fixes.ts && node --experimental-strip-types src/tests/verify-user-12-tasks.ts && node --experimental-strip-types src/tests/verify-5-enhancements.ts && node --experimental-strip-types src/tests/verify-7-enhancements.ts"
+    "test:data": "node --experimental-strip-types src/tests/verify-data.ts && node --experimental-strip-types src/tests/verify-contact-and-nav.ts && node --experimental-strip-types src/tests/verify-review-fixes.ts && node --experimental-strip-types src/tests/verify-user-12-tasks.ts && node --experimental-strip-types src/tests/verify-5-enhancements.ts && node --experimental-strip-types src/tests/verify-7-enhancements.ts && node --experimental-strip-types src/tests/verify-user-6-tasks.ts"
   },
   "dependencies": {
     "next": "^14.2.18",

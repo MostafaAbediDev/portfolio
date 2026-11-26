@@ -35,8 +35,8 @@ export const Skills: React.FC = () => {
           </h2>
           <p className="mt-3 text-base text-slate-600 dark:text-slate-400">
             {lang === 'fa'
-              ? 'تخصص متمرکز در پلتفرم دات‌نت، معماری پیازی، تحلیل دیتابیس و طراحی سیستم‌های مدرن'
-              : 'Focused proficiency in .NET ecosystem, Onion Architecture, Database Modeling & Enterprise Systems'}
+              ? 'تخصص متمرکز در پلتفرم دات‌نت (.NET)، معماری‌های مدرن نرم‌افزار، تحلیل پایگاه داده و طراحی سیستم‌های مقیاس‌پذیر سازمانی'
+              : 'Focused expertise in .NET platform, modern software architectures, relational database engineering, and scalable enterprise systems.'}
           </p>
         </motion.div>
 
@@ -80,12 +80,7 @@ export const Skills: React.FC = () => {
                           <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
                             {skill.name}
                           </span>
-                          {skill.level === 100 && (
-                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500 text-white shadow-sm">
-                              {lang === 'fa' ? 'تسلط ۱۰۰٪' : 'Mastery 100%'}
-                            </span>
-                          )}
-                          {skill.highlight && skill.level !== 100 && (
+                          {skill.highlight && (
                             <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                               Core
                             </span>
