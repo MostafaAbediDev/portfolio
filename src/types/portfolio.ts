@@ -32,6 +32,7 @@ export interface PersonalInfo {
   stats: StatItem[];
   avatar?: string;
   resumeUrl?: string;
+  yearsOfExperience?: number;
 }
 
 export interface SkillItem {

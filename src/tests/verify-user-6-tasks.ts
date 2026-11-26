@@ -35,14 +35,15 @@ assert.strictEqual(personalInfo.headlines.en.length, 3, 'Headlines EN should hav
 console.log('✓ Task 3: Onion Architecture headline removed successfully from FA and EN.');
 
 // 4. Work Experience 2 Years
+assert.strictEqual(personalInfo.yearsOfExperience, 2, 'Task 4 Failed: personalInfo.yearsOfExperience must be 2');
 const expStat = personalInfo.stats.find((s) => s.id === 'exp');
 assert(expStat, 'Task 4 Failed: exp stat must exist');
 assert.strictEqual(expStat.value, '+2', 'Task 4 Failed: exp stat value must be "+2"');
 assert(expStat.label.fa.includes('۲+ سال'), 'Task 4 Failed: exp stat label.fa must include "۲+ سال"');
 assert(expStat.label.en.includes('2+ Years'), 'Task 4 Failed: exp stat label.en must include "2+ Years"');
-assert(personalInfo.bio.fa.includes('۲ سال') && !personalInfo.bio.fa.includes('۱ سال'), 'Task 4 Failed: bio.fa must state 2 years');
-assert(personalInfo.bio.en.includes('2 years'), 'Task 4 Failed: bio.en must state 2 years');
-console.log('✓ Task 4: Work Experience updated to 2 years everywhere (stats, bio FA & EN).');
+assert(personalInfo.bio.fa.includes('بیش از ۲ سال تجربه تخصصی'), 'Task 4 Failed: bio.fa must include "بیش از ۲ سال تجربه تخصصی"');
+assert(personalInfo.bio.en.includes('over 2 years of professional experience'), 'Task 4 Failed: bio.en must include "over 2 years of professional experience"');
+console.log('✓ Task 4: Work Experience updated to 2 years everywhere (yearsOfExperience, stats, bio FA & EN).');
 
 // 5. Remove 100% Mastery Tag
 assert(!personalInfo.stats.some((s) => s.value === '100%' || s.id === 'db'), 'Task 5 Failed: 100% stat item must be removed from stats');
@@ -75,7 +76,16 @@ const allSrcFiles = [
   'src/components/Hero.tsx',
   'src/components/Navbar.tsx',
   'src/components/About.tsx',
+  'src/components/Experience.tsx',
+  'src/components/Projects.tsx',
+  'src/components/ProjectModal.tsx',
+  'src/components/Publications.tsx',
+  'src/components/Certificates.tsx',
+  'src/components/Contact.tsx',
+  'src/components/Footer.tsx',
+  'src/components/MobileSettingsModal.tsx',
   'src/app/layout.tsx',
+  'src/app/page.tsx',
 ];
 
 for (const relFile of allSrcFiles) {

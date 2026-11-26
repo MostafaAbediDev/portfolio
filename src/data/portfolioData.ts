@@ -13,6 +13,7 @@ import type {
 export const personalInfo: PersonalInfo = {
   name: 'Mostafa Abedi',
   nameFa: 'مصطفی عابدی',
+  yearsOfExperience: 2,
   title: {
     fa: 'توسعه‌دهنده تخصصی Backend و Full-Stack (ASP.NET, C#, SQL Server)',
     en: 'Specialized Backend & Full-Stack Developer (ASP.NET, C#, SQL Server)',
@@ -30,8 +31,8 @@ export const personalInfo: PersonalInfo = {
     ],
   },
   bio: {
-    fa: 'توسعه‌دهنده‌ی BackEnd با بیش از ۲ سال تجربه‌ی عملی و تخصصی در طراحی و توسعه‌ی نرم‌افزارهای تحت وب و ویندوز با استفاده از فناوری‌های مبتنی بر .NET. دارای تجربه در توسعه‌ی برنامه‌ها با ASP.NET Core، پیاده‌سازی معماری‌های مدرن و لایه‌ای، پیاده‌سازی APIهای RESTful و طراحی ساختارهای نرم‌افزاری منظم، قابل توسعه و مقیاس‌پذیر. متعهد به اصول مهندسی نرم‌افزار، بهبود کیفیت کد و علاقه‌مند به هوش مصنوعی و یادگیری فناوری‌های نوین.',
-    en: 'Backend & Full-Stack Developer with over 2 years of professional production experience in designing and developing web and desktop applications using .NET technologies. Experienced in ASP.NET Core, Modern Layered Architectures, RESTful APIs, and scalable software systems. Passionate about clean architecture, code quality, AI, and continuous learning.',
+    fa: 'توسعه‌دهنده‌ی BackEnd با بیش از ۲ سال تجربه تخصصی در طراحی و توسعه‌ی نرم‌افزارهای تحت وب و ویندوز با استفاده از فناوری‌های مبتنی بر .NET. دارای تجربه در توسعه‌ی برنامه‌ها با ASP.NET Core، پیاده‌سازی معماری‌های مدرن و لایه‌ای، پیاده‌سازی APIهای RESTful و طراحی ساختارهای نرم‌افزاری منظم، قابل توسعه و مقیاس‌پذیر. متعهد به اصول مهندسی نرم‌افزار، بهبود کیفیت کد و علاقه‌مند به هوش مصنوعی و یادگیری فناوری‌های نوین.',
+    en: 'Backend & Full-Stack Developer with over 2 years of professional experience in designing and developing web and desktop applications using .NET technologies. Experienced in ASP.NET Core, Modern Layered Architectures, RESTful APIs, and scalable software systems. Passionate about clean architecture, code quality, AI, and continuous learning.',
   },
   summary: {
     fa: 'توسعه‌دهنده متعهد، علاقه‌مند به حل چالش‌های پیچیده نرم‌افزاری، طراحی دیتابیس‌های بهینه و پیاده‌سازی سرویس‌های با کارایی بالا.',
