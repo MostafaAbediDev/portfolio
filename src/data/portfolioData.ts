@@ -185,7 +185,7 @@ export const skillCategories: SkillCategory[] = [
 ];
 
 export const experiences: ExperienceItem[] = [
-  {
+{
     id: 'noiatech',
     company: {
       fa: 'شرکت فناوری نویاتک (Noiatech)',
@@ -228,8 +228,8 @@ export const experiences: ExperienceItem[] = [
         'Led database analysis and conceptual architecture for a modern custom cabinet e-commerce platform',
         'Formulated backlogs, managed sprint tasks, and collaborated within agile Scrum sprints',
       ],
-    }
-    // technologies: ['C#', 'ASP.NET Core', 'Microsoft SQL Server', 'Layered Architecture', 'RESTful APIs', 'JavaScript', 'Tailwind CSS', 'Scrum'],
+    },
+    technologies: ['C#', 'ASP.NET Core', 'Microsoft SQL Server', 'Layered Architecture', 'RESTful APIs', 'JavaScript', 'Tailwind CSS', 'Scrum'],
   },
   {
     id: 'ara-pendar-dev',
@@ -268,8 +268,8 @@ export const experiences: ExperienceItem[] = [
         'Engineered scalable backend services and RESTful APIs using ASP.NET Core',
         'Architected relational schemas, stored procedures, and query optimizations in SQL Server',
       ],
-    }
-    // technologies: ['C#', 'ASP.NET Core', 'Microsoft SQL Server', 'RESTful APIs', 'Entity Framework Core', 'Git'],
+    },
+    technologies: ['C#', 'ASP.NET Core', 'Microsoft SQL Server', 'RESTful APIs', 'Entity Framework Core', 'Git'],
   },
   {
     id: 'ara-pendar-intern',
@@ -308,8 +308,8 @@ export const experiences: ExperienceItem[] = [
         'Successfully concluded academic internship with top evaluative performance',
         'Contributed to data modeling, C# module implementations, and SQL query optimizations',
       ],
-    }
-    // technologies: ['C#', 'ASP.NET Core', 'Microsoft SQL Server', 'REST APIs', 'Git', 'Agile Principles'],
+    },
+    technologies: ['C#', 'ASP.NET Core', 'Microsoft SQL Server', 'REST APIs', 'Git', 'Agile Principles'],
   },
 ];
 
@@ -650,11 +650,11 @@ export const certificates: CertificateItem[] = [
     typeLabel: {
       fa: 'گواهینامه تخصصی بک‌اند',
       en: 'Backend Specialization',
-    }
-    // badgeText: {
-    //   fa: 'گواهی دیباگران شیراز',
-    //   en: 'Dibaagaran Certified',
-    // },
+    },
+    badgeText: {
+      fa: 'گواهی دیباگران شیراز',
+      en: 'Dibaagaran Certified',
+    },
   },
   {
     id: 'cert-web',
@@ -670,11 +670,11 @@ export const certificates: CertificateItem[] = [
     typeLabel: {
       fa: 'گواهینامه تخصصی فرانت‌اند',
       en: 'Frontend Specialization',
-   }
-    // badgeText: {
-    //   fa: 'گواهی دیباگران شیراز',
-    //   en: 'Dibaagaran Certified',
-    // },
+   },
+    badgeText: {
+      fa: 'گواهی دیباگران شیراز',
+      en: 'Dibaagaran Certified',
+    },
   },
   {
     id: 'cert-android',
@@ -690,11 +690,11 @@ export const certificates: CertificateItem[] = [
     typeLabel: {
       fa: 'گواهینامه تخصصی اندروید',
       en: 'Android Engineering',
-     }
-    // badgeText: {
-    //   fa: 'گواهی دیباگران شیراز',
-    //   en: 'Dibaagaran Certified',
-    // },
+     },
+    badgeText: {
+      fa: 'گواهی دیباگران شیراز',
+      en: 'Dibaagaran Certified',
+    },
   },
   {
     id: 'cert-photoshop',
@@ -710,11 +710,11 @@ export const certificates: CertificateItem[] = [
     typeLabel: {
       fa: 'طراحی گرافیک و رابط کاربری',
       en: 'UI & Graphic Design',
-    }
-    // badgeText: {
-    //   fa: 'گواهی دیباگران شیراز',
-    //   en: 'Dibaagaran Certified',
-    // },
+    },
+    badgeText: {
+      fa: 'گواهی دیباگران شیراز',
+      en: 'Dibaagaran Certified',
+    },
   },
 ];
 
