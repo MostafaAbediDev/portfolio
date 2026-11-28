@@ -627,7 +627,6 @@ export const certificates: CertificateItem[] = [
       fa: 'پروانه و صلاحیت رسمی حرفه‌ای',
       en: 'Official Professional License',
     },
-    // },
     // validUntil: {
     //   fa: 'معتبر تا ۱۴۰۵/۰۶/۰۵',
     //   en: 'Valid until August 2026',
@@ -689,8 +688,8 @@ export const certificates: CertificateItem[] = [
     },
     type: 'course',
     typeLabel: {
-      fa: 'گواهینامه تخصصی موبایل',
-      en: 'Mobile Engineering',
+      fa: 'گواهینامه تخصصی اندروید',
+      en: 'Android Engineering',
     },
     badgeText: {
       fa: 'گواهی دیباگران شیراز',

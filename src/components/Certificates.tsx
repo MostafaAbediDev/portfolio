@@ -27,11 +27,11 @@ export const Certificates: React.FC = () => {
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             {lang === 'fa' ? 'مدارک، مجوزها و دوره‌های تخصصی' : 'Certificates & Professional Licenses'}
           </h2>
-          <p className="mt-3 text-base text-slate-600 dark:text-slate-400">
+          {/* <p className="mt-3 text-base text-slate-600 dark:text-slate-400">
             {lang === 'fa'
               ? 'پروانه نظام صنفی رایانه‌ای کشور و گواهینامه‌های تخصصی توسعه نرم‌افزار'
               : 'Iranian Computer Guild Organization license and technical education certificates'}
-          </p>
+          </p> */}
         </motion.div>
 
         {/* Certificates Grid */}
