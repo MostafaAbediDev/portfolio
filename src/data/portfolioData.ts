@@ -726,7 +726,7 @@ export const navItems: NavItem[] = [
   { id: 'projects', href: '#projects', label: { fa: 'پروژه‌ها', en: 'Projects' }, icon: 'FolderGit2' },
   { id: 'publications', href: '#publications', label: { fa: 'مقالات و پژوهش', en: 'Research' }, icon: 'BookOpen' },
   { id: 'certificates', href: '#certificates', label: { fa: 'مدارک و مجوزها', en: 'Certificates' }, icon: 'Award' },
-  { id: 'contact', href: '#contact', label: { fa: 'تماس', en: 'Contact' }, icon: 'Mail' },
+  { id: 'contact', href: '#contact', label: { fa: 'تماس با من', en: 'Contact me' }, icon: 'Mail' },
 ];
 
 export const uiStrings: UIStrings = {
