@@ -643,18 +643,18 @@ export const certificates: CertificateItem[] = [
       en: 'Comprehensive ASP.NET Core Backend Development & Clean Architecture',
     },
     issuer: {
-      fa: 'مجتمع فنی دیباگران شیراز',
-      en: 'Dibaagaran Higher Education Institute, Shiraz',
+      fa: 'آکادمی آتریا',
+      en: 'Atriya Academy',
     },
     type: 'course',
     typeLabel: {
       fa: 'گواهینامه تخصصی بک‌اند',
       en: 'Backend Specialization',
-    },
-    badgeText: {
-      fa: 'گواهی دیباگران شیراز',
-      en: 'Dibaagaran Certified',
-    },
+    }
+    // badgeText: {
+    //   fa: 'گواهی دیباگران شیراز',
+    //   en: 'Dibaagaran Certified',
+    // },
   },
   {
     id: 'cert-web',
@@ -670,11 +670,11 @@ export const certificates: CertificateItem[] = [
     typeLabel: {
       fa: 'گواهینامه تخصصی فرانت‌اند',
       en: 'Frontend Specialization',
-    },
-    badgeText: {
-      fa: 'گواهی دیباگران شیراز',
-      en: 'Dibaagaran Certified',
-    },
+   }
+    // badgeText: {
+    //   fa: 'گواهی دیباگران شیراز',
+    //   en: 'Dibaagaran Certified',
+    // },
   },
   {
     id: 'cert-android',
@@ -690,11 +690,11 @@ export const certificates: CertificateItem[] = [
     typeLabel: {
       fa: 'گواهینامه تخصصی اندروید',
       en: 'Android Engineering',
-    },
-    badgeText: {
-      fa: 'گواهی دیباگران شیراز',
-      en: 'Dibaagaran Certified',
-    },
+     }
+    // badgeText: {
+    //   fa: 'گواهی دیباگران شیراز',
+    //   en: 'Dibaagaran Certified',
+    // },
   },
   {
     id: 'cert-photoshop',
@@ -710,11 +710,11 @@ export const certificates: CertificateItem[] = [
     typeLabel: {
       fa: 'طراحی گرافیک و رابط کاربری',
       en: 'UI & Graphic Design',
-    },
-    badgeText: {
-      fa: 'گواهی دیباگران شیراز',
-      en: 'Dibaagaran Certified',
-    },
+    }
+    // badgeText: {
+    //   fa: 'گواهی دیباگران شیراز',
+    //   en: 'Dibaagaran Certified',
+    // },
   },
 ];
 
