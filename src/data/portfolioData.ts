@@ -627,10 +627,11 @@ export const certificates: CertificateItem[] = [
       fa: 'پروانه و صلاحیت رسمی حرفه‌ای',
       en: 'Official Professional License',
     },
-    validUntil: {
-      fa: 'معتبر تا ۱۴۰۵/۰۶/۰۵',
-      en: 'Valid until August 2026',
-    },
+    // },
+    // validUntil: {
+    //   fa: 'معتبر تا ۱۴۰۵/۰۶/۰۵',
+    //   en: 'Valid until August 2026',
+    // },
     badgeText: {
       fa: 'مشاور رتبه ۳ نظام صنفی رایانه‌ای',
       en: 'Certified Consultant Grade 3',
