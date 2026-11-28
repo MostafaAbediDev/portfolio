@@ -644,7 +644,7 @@ export const Contact: React.FC = () => {
               </span>
               <span className="flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-cyan-500 shrink-0" />
-                <span>{lang === 'fa' ? 'شیراز، ایران (GMT+3:30)' : 'Shiraz, Iran (GMT+3:30)'}</span>
+                <span>{lang === 'fa' ? 'شیراز، ایران' : 'Shiraz, Iran'}</span>
               </span>
             </div>
           </motion.div>
