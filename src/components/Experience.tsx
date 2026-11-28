@@ -87,7 +87,7 @@ export const Experience: React.FC = () => {
                 </p>
 
                 {/* Key Achievements Bullet points */}
-                <div className="mb-6">
+                <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
                     {lang === 'fa' ? 'دستاوردهای کلیدی و مسئولیت‌ها:' : 'Key Achievements & Deliverables:'}
                   </h4>
@@ -99,21 +99,6 @@ export const Experience: React.FC = () => {
                       </li>
                     ))}
                   </ul>
-                </div>
-
-                {/* Technologies Stack Pills */}
-                <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-semibold text-slate-500 me-2">
-                    {lang === 'fa' ? 'تکنولوژی‌های مورد استفاده:' : 'Tech Stack:'}
-                  </span>
-                  {exp.technologies.map((tech, techIdx) => (
-                    <span
-                      key={techIdx}
-                      className="px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
-                    >
-                      {tech}
-                    </span>
-                  ))}
                 </div>
               </div>
             </motion.div>

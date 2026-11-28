@@ -11,8 +11,18 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled((prev) => {
+            const next = window.scrollY > 20;
+            return prev !== next ? next : prev;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -24,7 +34,7 @@ export const Navbar: React.FC = () => {
         setMobileMenuOpen(false);
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('resize', handleResize);
     return () => {
@@ -33,6 +43,11 @@ export const Navbar: React.FC = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const handleNavClick = (id: string) => {
+    setActiveSection(id, 1000);
+    setMobileMenuOpen(false);
+  };
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -68,10 +83,7 @@ export const Navbar: React.FC = () => {
           {/* Logo & Brand Name */}
           <a
             href="#hero"
-            onClick={() => {
-              setActiveSection('hero');
-              setMobileMenuOpen(false);
-            }}
+            onClick={() => handleNavClick('hero')}
             className="flex items-center gap-2 sm:gap-3 group focus:outline-none min-w-0 py-1"
             aria-label={lang === 'fa' ? personalInfo.nameFa : personalInfo.name}
           >
@@ -149,7 +161,7 @@ export const Navbar: React.FC = () => {
               <a
                 key={item.id}
                 href={item.href}
-                onClick={() => setActiveSection(item.id)}
+                onClick={() => handleNavClick(item.id)}
                 className={`px-3 xl:px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                   activeSection === item.id
                     ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white shadow-sm font-bold shadow-glow'
@@ -215,10 +227,7 @@ export const Navbar: React.FC = () => {
                 <a
                   key={item.id}
                   href={item.href}
-                  onClick={() => {
-                    setActiveSection(item.id);
-                    setMobileMenuOpen(false);
-                  }}
+                  onClick={() => handleNavClick(item.id)}
                   className={`min-h-[44px] px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center transition-all ${
                     activeSection === item.id
                       ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold shadow-glow'

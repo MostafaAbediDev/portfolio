@@ -27,11 +27,6 @@ export const Certificates: React.FC = () => {
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             {lang === 'fa' ? 'مدارک، مجوزها و دوره‌های تخصصی' : 'Certificates & Professional Licenses'}
           </h2>
-          <p className="mt-3 text-base text-slate-600 dark:text-slate-400">
-            {lang === 'fa'
-              ? 'پروانه نظام صنفی رایانه‌ای کشور و گواهینامه‌های تخصصی توسعه نرم‌افزار'
-              : 'Iranian Computer Guild Organization license and technical education certificates'}
-          </p>
         </motion.div>
 
         {/* Certificates Grid */}
@@ -65,9 +60,11 @@ export const Certificates: React.FC = () => {
                       <Award className="w-5 h-5" />
                     )}
                   </div>
-                  <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-200/70 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">
-                    {cert.badgeText[lang]}
-                  </span>
+                  {cert.badgeText && cert.badgeText[lang] && (
+                    <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-200/70 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">
+                      {cert.badgeText[lang]}
+                    </span>
+                  )}
                 </div>
 
                 {/* Certificate Title */}

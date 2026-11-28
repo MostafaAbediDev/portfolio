@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import type { Language, Theme, ProjectItem, UIStrings } from '../types/portfolio';
 import { uiStrings } from '../data/portfolioData';
 
@@ -12,7 +12,7 @@ interface PortfolioContextType {
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
   activeSection: string;
-  setActiveSection: (id: string) => void;
+  setActiveSection: (id: string, suppressDurationMs?: number) => void;
   selectedProject: ProjectItem | null;
   setSelectedProject: (project: ProjectItem | null) => void;
   dir: 'rtl' | 'ltr';
@@ -26,9 +26,17 @@ const PortfolioContext = createContext<PortfolioContextType | undefined>(undefin
 export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<Language>('fa');
   const [theme, setTheme] = useState<Theme>('dark');
-  const [activeSection, setActiveSection] = useState<string>('hero');
+  const [activeSection, setActiveSectionState] = useState<string>('hero');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const suppressSpyUntilRef = useRef<number>(0);
+
+  const setActiveSection = useCallback((id: string, suppressDurationMs = 1000) => {
+    setActiveSectionState(id);
+    if (suppressDurationMs > 0) {
+      suppressSpyUntilRef.current = Date.now() + suppressDurationMs;
+    }
+  }, []);
 
   // Load preferences from localStorage on mount
   useEffect(() => {
@@ -65,22 +73,60 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     root.setAttribute('dir', lang === 'fa' ? 'rtl' : 'ltr');
   }, [lang]);
 
-  // Scroll spy to update activeSection automatically as user scrolls
+  // Optimized Scroll spy to update activeSection automatically as user scrolls
   useEffect(() => {
     const sectionIds = ['hero', 'about', 'skills', 'experience', 'projects', 'publications', 'certificates', 'contact'];
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
+    let rafId: number | null = null;
+
+    const checkActiveSection = () => {
+      // If manual navigation was recently triggered, don't let scroll-spy override it
+      if (Date.now() < suppressSpyUntilRef.current) {
+        return;
+      }
+
+      // Check if user has scrolled near bottom of page
+      const isNearBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
+      if (isNearBottom) {
+        const lastSection = sectionIds[sectionIds.length - 1];
+        setActiveSectionState((prev) => (prev === lastSection ? prev : lastSection));
+        return;
+      }
+
+      // If at the very top
+      if (window.scrollY < 80) {
+        setActiveSectionState((prev) => (prev === 'hero' ? prev : 'hero'));
+        return;
+      }
+
+      const scrollPosition = window.scrollY + 180;
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const el = document.getElementById(sectionIds[i]);
         if (el && el.offsetTop <= scrollPosition) {
-          setActiveSection(sectionIds[i]);
+          const currentId = sectionIds[i];
+          setActiveSectionState((prev) => (prev === currentId ? prev : currentId));
           break;
         }
       }
     };
+
+    const handleScroll = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(() => {
+        checkActiveSection();
+        rafId = null;
+      });
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    checkActiveSection();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
   }, []);
 
   const handleSetLang = (newLang: Language) => {

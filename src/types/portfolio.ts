@@ -110,7 +110,7 @@ export interface CertificateItem {
   typeLabel: { fa: string; en: string };
   date?: { fa: string; en: string };
   validUntil?: { fa: string; en: string };
-  badgeText: { fa: string; en: string };
+  badgeText?: { fa: string; en: string };
 }
 
 export interface NavItem {

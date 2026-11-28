@@ -156,7 +156,7 @@ export const Hero: React.FC = () => {
           >
             {/* Name Heading */}
             <div className="flex flex-col gap-2">
-              <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-tight break-words">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight break-words">
                 <span className="text-slate-900 dark:text-white">
                   {lang === 'fa' ? 'سلام، من ' : "Hi, I'm "}
                 </span>
