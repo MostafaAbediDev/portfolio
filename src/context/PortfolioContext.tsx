@@ -30,9 +30,11 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const suppressSpyUntilRef = useRef<number>(0);
+  const targetSectionRef = useRef<string | null>(null);
 
-  const setActiveSection = useCallback((id: string, suppressDurationMs = 1000) => {
+  const setActiveSection = useCallback((id: string, suppressDurationMs = 1500) => {
     setActiveSectionState(id);
+    targetSectionRef.current = id;
     if (suppressDurationMs > 0) {
       suppressSpyUntilRef.current = Date.now() + suppressDurationMs;
     }
@@ -79,14 +81,38 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     let rafId: number | null = null;
 
     const checkActiveSection = () => {
-      // If manual navigation was recently triggered, don't let scroll-spy override it
-      if (Date.now() < suppressSpyUntilRef.current) {
-        return;
-      }
-
       // Check if user has scrolled near bottom of page
       const isNearBottom =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 70;
+
+      // If manual navigation was triggered, suppress scroll-spy overriding until target is reached
+      if (Date.now() < suppressSpyUntilRef.current && targetSectionRef.current) {
+        const targetId = targetSectionRef.current;
+        let reached = false;
+
+        if (targetId === 'hero' && window.scrollY < 80) {
+          reached = true;
+        } else if (targetId === 'contact' && isNearBottom) {
+          reached = true;
+        } else {
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            const rect = targetEl.getBoundingClientRect();
+            // Target is aligned near viewport reading zone (within 50px tolerance)
+            if (rect.top <= 160 && rect.bottom >= 120) {
+              reached = true;
+            }
+          }
+        }
+
+        if (reached) {
+          suppressSpyUntilRef.current = 0;
+          targetSectionRef.current = null;
+        } else {
+          return;
+        }
+      }
+
       if (isNearBottom) {
         const lastSection = sectionIds[sectionIds.length - 1];
         setActiveSectionState((prev) => (prev === lastSection ? prev : lastSection));
@@ -99,13 +125,16 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      const scrollPosition = window.scrollY + 180;
+      // Viewport reading line (160px below header) using getBoundingClientRect
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const el = document.getElementById(sectionIds[i]);
-        if (el && el.offsetTop <= scrollPosition) {
-          const currentId = sectionIds[i];
-          setActiveSectionState((prev) => (prev === currentId ? prev : currentId));
-          break;
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 160) {
+            const currentId = sectionIds[i];
+            setActiveSectionState((prev) => (prev === currentId ? prev : currentId));
+            break;
+          }
         }
       }
     };
@@ -118,11 +147,30 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       });
     };
 
+    // If user takes manual wheel or touch control, release click suppression immediately
+    const handleUserInteraction = () => {
+      suppressSpyUntilRef.current = 0;
+      targetSectionRef.current = null;
+    };
+
+    const handleScrollEnd = () => {
+      suppressSpyUntilRef.current = 0;
+      targetSectionRef.current = null;
+      checkActiveSection();
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('wheel', handleUserInteraction, { passive: true });
+    window.addEventListener('touchstart', handleUserInteraction, { passive: true });
+    window.addEventListener('scrollend', handleScrollEnd, { passive: true });
+
     checkActiveSection();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('wheel', handleUserInteraction);
+      window.removeEventListener('touchstart', handleUserInteraction);
+      window.removeEventListener('scrollend', handleScrollEnd);
       if (rafId !== null) {
         window.cancelAnimationFrame(rafId);
       }

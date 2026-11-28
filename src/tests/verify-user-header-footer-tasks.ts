@@ -11,16 +11,19 @@ const contextContent = fs.readFileSync(path.join(process.cwd(), 'src', 'context'
 
 assert(
   contextContent.includes('suppressSpyUntilRef') &&
+  contextContent.includes('targetSectionRef') &&
+  contextContent.includes('getBoundingClientRect') &&
   contextContent.includes('requestAnimationFrame') &&
   contextContent.includes('window.cancelAnimationFrame'),
-  'Task 1 Failed: PortfolioContext.tsx must throttle scroll-spy with requestAnimationFrame and provide click suppression'
+  'Task 1 Failed: PortfolioContext.tsx must throttle scroll-spy with requestAnimationFrame and provide click suppression with target tracking'
 );
 
 assert(
   navbarContent.includes('requestAnimationFrame') &&
   navbarContent.includes('handleNavClick') &&
-  navbarContent.includes("handleNavClick('hero')"),
-  'Task 1 Failed: Navbar.tsx must throttle scroll listener and use handleNavClick for smooth instant active state'
+  navbarContent.includes("handleNavClick('hero')") &&
+  navbarContent.includes('scrollIntoView'),
+  'Task 1 Failed: Navbar.tsx must throttle scroll listener, use handleNavClick with smooth scrolling and zero font reflow'
 );
 console.log('✓ Task 1: Header Navigation Smoothness & Throttled Scroll-Spy verified.');
 

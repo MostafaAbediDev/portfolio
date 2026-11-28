@@ -44,9 +44,24 @@ export const Navbar: React.FC = () => {
     };
   }, []);
 
-  const handleNavClick = (id: string) => {
-    setActiveSection(id, 1000);
+  const handleNavClick = (id: string, e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
+    setActiveSection(id, 1500);
     setMobileMenuOpen(false);
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = '';
+    }
+    const targetEl = document.getElementById(id);
+    if (id === 'hero' || !targetEl) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      targetEl.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (typeof window !== 'undefined' && window.history?.pushState) {
+      window.history.pushState(null, '', `#${id}`);
+    }
   };
 
   useEffect(() => {
@@ -83,7 +98,10 @@ export const Navbar: React.FC = () => {
           {/* Logo & Brand Name */}
           <a
             href="#hero"
-            onClick={() => handleNavClick('hero')}
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick('hero');
+            }}
             className="flex items-center gap-2 sm:gap-3 group focus:outline-none min-w-0 py-1"
             aria-label={lang === 'fa' ? personalInfo.nameFa : personalInfo.name}
           >
@@ -161,10 +179,13 @@ export const Navbar: React.FC = () => {
               <a
                 key={item.id}
                 href={item.href}
-                onClick={() => handleNavClick(item.id)}
-                className={`px-3 xl:px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(item.id);
+                }}
+                className={`px-3 xl:px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors duration-150 ${
                   activeSection === item.id
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white shadow-sm font-bold shadow-glow'
+                    ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white shadow-sm shadow-glow'
                     : 'text-slate-700 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50'
                 }`}
               >
@@ -227,10 +248,13 @@ export const Navbar: React.FC = () => {
                 <a
                   key={item.id}
                   href={item.href}
-                  onClick={() => handleNavClick(item.id)}
-                  className={`min-h-[44px] px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center transition-all ${
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.id);
+                  }}
+                  className={`min-h-[44px] px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center transition-colors duration-150 ${
                     activeSection === item.id
-                      ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold shadow-glow'
+                      ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white shadow-glow'
                       : 'text-slate-800 dark:text-slate-100 hover:bg-emerald-500/10 hover:text-emerald-600 dark:hover:text-emerald-400'
                   }`}
                 >
